@@ -1,0 +1,42 @@
+name: Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Locale consistency
+        run: node scripts/validate-locales.js
+      - name: JavaScript syntax
+        run: |
+          node --check assets/js/app.js
+          node --check assets/js/i18n.js
+          node --check scripts/validate-locales.js
+      - name: Local link check
+        run: bash scripts/link-check.sh
+      - name: Privacy scan
+        run: bash scripts/privacy-scan.sh
+      - name: HTML smoke check
+        run: |
+          test -f index.html
+          test -f 404.html
+          grep -q '<main id="main">' index.html
+          grep -q 'data-lang="en"' index.html
+      - name: CSS smoke check
+        run: |
+          test -f assets/css/styles.css
+          grep -q 'prefers-reduced-motion' assets/css/styles.css
+          grep -q 'rtl' assets/js/i18n.js
+      - name: Markdown privacy smoke check
+        run: |
+          ! grep -RInE -- '-----BEGIN|PrivateKey|PresharedKey' *.md docs diagrams .github || exit 1

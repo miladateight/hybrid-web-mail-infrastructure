@@ -1,0 +1,263 @@
+{
+  "meta": {
+    "title": "Hybride Unternehmens-Web- und Mail-Infrastruktur | Milad",
+    "description": "Eine anonyme mehrsprachige Fallstudie zu Infrastruktur-Engineering mit Linux-Hosting, Maildiensten, sicherem Remote-Zugriff, MikroTik-Netzwerken und hybrider Konnektivität."
+  },
+  "brand": {
+    "short": "Hybride Infrastruktur"
+  },
+  "accessibility": {
+    "skip": "Zum Inhalt springen",
+    "openMenu": "Navigation öffnen",
+    "closeMenu": "Navigation schließen",
+    "languageSelector": "Sprachauswahl",
+    "heroVisual": "Abstrakte Infrastrukturillustration",
+    "architectureMap": "Übergeordnete Systemarchitektur"
+  },
+  "nav": {
+    "overview": "Überblick",
+    "challenge": "Herausforderung",
+    "role": "Meine Rolle",
+    "architecture": "Architektur",
+    "web": "Webplattform",
+    "mail": "Mailplattform",
+    "connectivity": "Konnektivität",
+    "security": "Sicherheit",
+    "recovery": "Wiederherstellung",
+    "stack": "Technologien",
+    "lessons": "Erkenntnisse"
+  },
+  "hero": {
+    "label": "Bereinigte Portfolio-Fallstudie",
+    "title": "Hybride Unternehmens-Web- und Mail-Infrastruktur",
+    "lead": "Eine anonyme Engineering-Fallstudie über Website-Bereitstellung, Linux-Hosting, Unternehmensmail, sicheren Remote-Zugriff und hybride Netzwerkintegration.",
+    "primaryAction": "Architektur ansehen",
+    "secondaryAction": "Repository-README öffnen"
+  },
+  "sections": {
+    "overview": {
+      "kicker": "Überblick",
+      "title": "Eine Fallstudie zu Web-, Mail- und Netzwerkbetrieb",
+      "body": "Dieses Portfolio beschreibt ein bereinigtes Infrastrukturprojekt, das eine Unternehmenswebsite, Linux-basiertes Hosting, verwaltete Maildienste, Reverse Proxying, sicheren externen Zugriff, gerouteten internen Zugriff, DNS-Authentifizierung, Backup-Planung und betriebliches Troubleshooting zusammenführt."
+    },
+    "challenge": {
+      "kicker": "Herausforderung",
+      "title": "Öffentliche Bereitstellung, interne Zuverlässigkeit und Mailkontrolle ausbalancieren",
+      "body": "Die Organisation benötigte eine wartbare Plattform für Website-Bereitstellung und Unternehmensmail mit unterschiedlichen Zugriffspfaden für interne und externe Benutzer. Zusätzlich waren praktische Sicherheitskontrollen, zuverlässige DNS- und Mailauthentifizierung sowie nutzbare Wiederherstellungsabläufe erforderlich."
+    },
+    "role": {
+      "kicker": "Meine Rolle",
+      "title": "Milad verantwortete die Integration über Web-, Linux-, Mail- und Netzwerkschichten",
+      "body": "Milad entwarf und implementierte die Website-Präsentationsschicht, stellte die Hosting-Umgebung bereit, administrierte sie, konfigurierte Maildienste, integrierte sichere Konnektivität, koordinierte DNS-Authentifizierung und pflegte Troubleshooting-Dokumentation. Der Schwerpunkt lag auf Installation, Konfiguration, Integration, Absicherung und Betrieb etablierter Technologien."
+    },
+    "architecture": {
+      "kicker": "Architektur",
+      "title": "Generalisierte hybride Architektur",
+      "body": "Das öffentliche Portfolio-Diagramm entfernt bewusst Provider, Adressen, Hostnamen, Schnittstellennamen und exakte Routingwerte. Es zeigt nur Verantwortlichkeiten und Beziehungen zwischen den Hauptkomponenten."
+    },
+    "web": {
+      "kicker": "Webplattform",
+      "title": "Website-Bereitstellung und Linux-Hosting-Administration",
+      "body": "Die Fallstudie umfasst Website-Design und Implementierung, Bereitstellung in einer Linux-Hosting-Umgebung, HestiaCP-Administration, Nginx-Hosting, Reverse-Proxy-Verhalten, TLS-Management und praktische Wartungsroutinen."
+    },
+    "mail": {
+      "kicker": "Mailplattform",
+      "title": "Unternehmensmail mit kontrollierten Zustellpfaden",
+      "body": "Der Mailbetrieb umfasste Exim SMTP, Dovecot IMAP, Roundcube Webmail, TLS-Zugriff, interne und externe Postfachnutzung, Relay-Integration und domänenbasierte Konzepte für ausgehende Mail."
+    },
+    "connectivity": {
+      "kicker": "Konnektivität",
+      "title": "Sicherer externer Einstieg und intern gerouteter Zugriff",
+      "body": "Ein European VPS stellte einen kontrollierten externen Einstiegspunkt bereit. HAProxy- und SMTP-Relay-Verhalten wurden mit einem verschlüsselten WireGuard-Pfad zum internen Edge Router verbunden, wo Firewall-, NAT- und Policy-Based-Routing-Entscheidungen auf hoher Ebene gepflegt wurden."
+    },
+    "security": {
+      "kicker": "Sicherheit",
+      "title": "Bereinigter Sicherheitsansatz",
+      "body": "Die Sicherheitsarbeit konzentrierte sich auf TLS, Firewall-Regeln, NAT-Grenzen, Authentifizierungsrecords, reduzierte Angriffsfläche, Credential-Hygiene, getrennte Backups und öffentliche Dokumentation ohne Produktionswerte."
+    },
+    "recovery": {
+      "kicker": "Wiederherstellung",
+      "title": "Troubleshooting, Incident Recovery und Validierung",
+      "body": "Die Recovery-Story ist als allgemeiner Betriebsprozess dokumentiert: Symptome, Untersuchung, Ursachenkategorie, Wiederherstellung, Validierung und vorbeugende Dokumentation. Reale Logs, Befehlsverläufe, Hostnamen und Incident-Kennungen werden nicht verwendet."
+    },
+    "stack": {
+      "kicker": "Technologien",
+      "title": "Administrierte und integrierte Technologien",
+      "body": "Das Portfolio nennt Technologien als administrierte, konfigurierte und integrierte Komponenten. Es beansprucht keine Urheberschaft an Drittsoftware."
+    },
+    "lessons": {
+      "kicker": "Erkenntnisse",
+      "title": "Betriebliche Erkenntnisse aus hybrider Infrastrukturarbeit"
+    },
+    "docs": {
+      "kicker": "Dokumentation",
+      "title": "Repository-Dokumentation",
+      "body": "Begleitende Markdown-Dateien erklären Architektur, Verantwortlichkeiten, Datenschutzrahmen, Sicherheitsansatz, Tests, Recovery und Wartung ohne Produktionsdetails."
+    }
+  },
+  "overview": {
+    "outcomes": [
+      "Zentralisierte Web- und Maildienste in einem wartbaren Betriebsmodell.",
+      "Sicherer interner und externer Zugriff ohne Veröffentlichung von Produktionskennungen.",
+      "Verschlüsselte Konnektivität zwischen Infrastrukturstandorten.",
+      "Wiederholbare Validierungs-, Backup- und Recovery-Dokumentation."
+    ]
+  },
+  "challenge": {
+    "items": [
+      {
+        "title": "Öffentliche Website-Bereitstellung",
+        "body": "Die Plattform musste eine Unternehmenswebsite über einen kontrollierten Hostingpfad mit HTTPS und Reverse-Proxy-Konzept bereitstellen."
+      },
+      {
+        "title": "Mailzugriffsmuster",
+        "body": "Interne und externe Benutzer benötigten zuverlässigen Zugriff auf SMTP, IMAP und Webmail ohne unnötige Offenlegung der Infrastruktur."
+      },
+      {
+        "title": "Kontrolle ausgehender Routen",
+        "body": "Verschiedene gehostete Domänen benötigten direkte und relayed SMTP-Konzepte mit abgestimmter DNS-Authentifizierung."
+      }
+    ]
+  },
+  "role": {
+    "tags": [
+      "Website-Design",
+      "Website-Deployment",
+      "Linux-Administration",
+      "HestiaCP-Administration",
+      "Nginx-Hosting",
+      "Reverse-Proxy-Setup",
+      "Exim SMTP",
+      "Dovecot IMAP",
+      "Roundcube Webmail",
+      "TLS-Management",
+      "DNS-Koordination",
+      "MikroTik-Routing",
+      "Firewall und NAT",
+      "WireGuard-Setup",
+      "HAProxy-Setup",
+      "SMTP-Relay-Integration",
+      "Monitoring und Validierung",
+      "Incident-Troubleshooting",
+      "Recovery-Dokumentation"
+    ]
+  },
+  "diagram": {
+    "externalUsers": "Externe Benutzer",
+    "publicDns": "Public DNS",
+    "vps": "European VPS",
+    "tunnel": "Sicherer WireGuard-Tunnel",
+    "router": "MikroTik Edge Router",
+    "reverseProxy": "Reverse Proxy Server",
+    "webMailServer": "HestiaCP Web- und Mailserver",
+    "internalUsers": "Interne Benutzer",
+    "website": "Website",
+    "email": "E-Mail",
+    "webmail": "Webmail"
+  },
+  "web": {
+    "items": [
+      {
+        "title": "Statische und dynamische Auslieferung",
+        "body": "Implementierung und Bereitstellung der Website-Schicht bei klarer Trennung vom Produktionsquellcode."
+      },
+      {
+        "title": "Hosting-Administration",
+        "body": "Konfiguration von HestiaCP, Nginx-Hosting, TLS-Zertifikaten und betrieblichen Wartungsroutinen."
+      },
+      {
+        "title": "Reverse-Proxy-Integration",
+        "body": "Integration eines generalisierten Reverse-Proxy-Pfads für kontrollierten öffentlichen Zugriff."
+      },
+      {
+        "title": "Health Checks",
+        "body": "Praktische Validierung nach Hosting-, TLS-, Routing- oder Dateisystemänderungen."
+      }
+    ]
+  },
+  "mail": {
+    "flow": [
+      "Eingehende Mail wurde über Public DNS, MX-Konzepte und einen Linux-basierten Mailserver koordiniert.",
+      "Exim übernahm SMTP-Submission und Transport, während Dovecot IMAP-Postfachzugriff bereitstellte.",
+      "Roundcube bot webbasiertes Webmail für Benutzer mit Bedarf an einer verwalteten Oberfläche.",
+      "Ausgehende Mail konnte je nach Domänenrichtlinie direkte oder relayed Pfade nutzen.",
+      "SPF, DKIM, DMARC, MX und PTR wurden als Teil von Zustellbarkeit und Vertrauen dokumentiert."
+    ]
+  },
+  "connectivity": {
+    "items": [
+      {
+        "title": "Externer Einstiegspunkt",
+        "body": "Ein European VPS diente als bereinigter öffentlicher Edge für ausgewählte Zugriffspfade."
+      },
+      {
+        "title": "Verschlüsselter Tunnel",
+        "body": "WireGuard lieferte ein sicheres Site-to-Site-Transportkonzept zwischen Infrastrukturstandorten."
+      },
+      {
+        "title": "Edge Routing",
+        "body": "MikroTik RouterOS übernahm Firewall-, NAT- und Policy-Based-Routing-Verantwortlichkeiten."
+      },
+      {
+        "title": "Service Relay",
+        "body": "HAProxy- und SMTP-Relay-Verhalten unterstützten kontrollierten externen Zugriff und ausgehende Zustellung."
+      }
+    ]
+  },
+  "security": {
+    "items": [
+      "In diesem Repository werden keine Produktionskennungen veröffentlicht.",
+      "TLS, DNS-Authentifizierung und Zugriffsgrenzen werden nur auf hoher Ebene beschrieben.",
+      "Credentials, Schlüssel, Backups, Postfachdaten und Konfigurationsexporte sind ausgeschlossen.",
+      "Privacy-Scanner prüfen verbotene Namen, Adressen und Secret-Muster.",
+      "Die Dokumentation ist eine Portfolio-Erzählung und keine Deployment-Anleitung."
+    ]
+  },
+  "recovery": {
+    "timeline": [
+      "Symptome wurden aus sichtbarem Benutzerverhalten und Service-Health-Checks dokumentiert.",
+      "Die Untersuchung trennte Website-Dateien, Control-Panel-Dateien, Maildienste und Routing-Schichten.",
+      "Ursachenkategorie: Abhängigkeiten der Hosting-Control-Panel-Anwendung wurden nach einer dateisystembezogenen Änderung nicht mehr verfügbar.",
+      "Die Wiederherstellung konzentrierte sich auf erforderliche Anwendungsdateien, Servicevalidierung und das Vermeiden nicht zusammenhängender Änderungen.",
+      "Vorbeugende Maßnahmen betonten Restore-Tests, Pfadvalidierung und klarere Recovery-Notizen."
+    ]
+  },
+  "stack": {
+    "groups": [
+      {
+        "title": "Web und Hosting",
+        "items": ["HTML", "CSS", "JavaScript", "Linux", "Ubuntu Server", "HestiaCP", "Nginx", "TLS"]
+      },
+      {
+        "title": "Mail",
+        "items": ["Exim", "Dovecot", "Roundcube", "SMTP", "IMAP", "SPF", "DKIM", "DMARC", "MX", "PTR"]
+      },
+      {
+        "title": "Netzwerk",
+        "items": ["MikroTik RouterOS", "WireGuard", "HAProxy", "NAT", "Firewall", "Policy-Based Routing", "DNS", "TCP/IP"]
+      },
+      {
+        "title": "Betrieb",
+        "items": ["Bash", "Logging", "Monitoring", "Backup", "Incident Recovery", "Troubleshooting", "Technische Dokumentation"]
+      }
+    ]
+  },
+  "lessons": {
+    "items": [
+      "Produktionskonfiguration von öffentlicher Dokumentation trennen.",
+      "Restore-Verfahren testen, nicht nur Backup-Erstellung.",
+      "Control-Panel-Dateien getrennt von gehosteten Website-Dateien behandeln.",
+      "Dateisystempfade vor destruktiven Aktionen validieren.",
+      "Netzwerk- und Mailrouting-Dokumentation aktuell halten.",
+      "Nach Infrastrukturänderungen explizite Health Checks nutzen.",
+      "Schlüssel und Credentials aus der Versionskontrolle heraushalten.",
+      "Kritische Mailsysteme schrittweise ändern.",
+      "DNS, TLS und Routing gemeinsam prüfen.",
+      "Öffentliches Portfolio-Material bereinigt halten."
+    ]
+  },
+  "footer": {
+    "notice": "Anonyme Portfolio-Fallstudie. Es sind keine Produktionskennungen, Credentials, Screenshots oder Konfigurationen enthalten.",
+    "author": "Autor"
+  }
+}

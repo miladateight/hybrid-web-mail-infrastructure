@@ -1,0 +1,263 @@
+{
+  "meta": {
+    "title": "Hybrid Corporate Web and Mail Infrastructure | Milad",
+    "description": "An anonymous multilingual infrastructure engineering case study covering Linux hosting, mail services, secure remote access, MikroTik networking and hybrid connectivity."
+  },
+  "brand": {
+    "short": "Hybrid Infrastructure"
+  },
+  "accessibility": {
+    "skip": "Skip to content",
+    "openMenu": "Open navigation",
+    "closeMenu": "Close navigation",
+    "languageSelector": "Language selector",
+    "heroVisual": "Abstract infrastructure illustration",
+    "architectureMap": "High-level system architecture"
+  },
+  "nav": {
+    "overview": "Overview",
+    "challenge": "Challenge",
+    "role": "My Role",
+    "architecture": "Architecture",
+    "web": "Web Platform",
+    "mail": "Mail Platform",
+    "connectivity": "Connectivity",
+    "security": "Security",
+    "recovery": "Recovery",
+    "stack": "Technology Stack",
+    "lessons": "Lessons Learned"
+  },
+  "hero": {
+    "label": "Sanitized Portfolio Case Study",
+    "title": "Hybrid Corporate Web and Mail Infrastructure",
+    "lead": "An anonymous engineering case study covering website delivery, Linux hosting, enterprise mail services, secure remote access and hybrid network integration.",
+    "primaryAction": "Explore Architecture",
+    "secondaryAction": "Open Repository README"
+  },
+  "sections": {
+    "overview": {
+      "kicker": "Overview",
+      "title": "A unified web, mail and network operations case study",
+      "body": "This portfolio describes a sanitized infrastructure project that brought together a corporate website, Linux-based hosting, managed mail services, reverse proxying, secure external access, routed internal access, DNS authentication, backup planning and operational troubleshooting."
+    },
+    "challenge": {
+      "kicker": "Challenge",
+      "title": "Balancing public delivery, internal reliability and mail control",
+      "body": "The organization needed a maintainable platform for website delivery and corporate email while supporting different access paths for internal and external users. The architecture also needed practical security controls, reliable DNS and email authentication, and recovery procedures that could be used during incidents."
+    },
+    "role": {
+      "kicker": "My Role",
+      "title": "Milad owned the integration work across web, Linux, mail and network layers",
+      "body": "Milad designed and implemented the website presentation layer, deployed and administered the hosting environment, configured mail services, integrated secure connectivity, coordinated DNS authentication and maintained troubleshooting documentation. The work focused on installing, configuring, integrating, securing and operating established technologies."
+    },
+    "architecture": {
+      "kicker": "Architecture",
+      "title": "Generalized hybrid architecture",
+      "body": "The public portfolio diagram intentionally removes provider names, addresses, hostnames, interface names and exact routing values. It shows only the engineering responsibilities and the relationship between major components."
+    },
+    "web": {
+      "kicker": "Web Platform",
+      "title": "Website delivery and Linux hosting administration",
+      "body": "The case study covers website design and implementation, deployment to a Linux hosting environment, HestiaCP administration, Nginx hosting, reverse proxy behavior, TLS management and practical maintenance routines."
+    },
+    "mail": {
+      "kicker": "Mail Platform",
+      "title": "Corporate email services with controlled delivery paths",
+      "body": "Mail operations included Exim SMTP, Dovecot IMAP, Roundcube webmail, TLS access, internal and external mailbox access, relay integration and domain-based outbound mail routing concepts."
+    },
+    "connectivity": {
+      "kicker": "Connectivity",
+      "title": "Secure external entry and internal routed access",
+      "body": "A European VPS provided a controlled external entry point. HAProxy and SMTP relay behavior were integrated with an encrypted WireGuard path toward the internal edge router, where firewall, NAT and policy-based routing decisions were maintained at a high level."
+    },
+    "security": {
+      "kicker": "Security",
+      "title": "Sanitized security approach",
+      "body": "Security work focused on TLS, firewall rules, NAT boundaries, authentication records, reduced exposure, credential hygiene, backup separation and public documentation that never exposes production values."
+    },
+    "recovery": {
+      "kicker": "Recovery",
+      "title": "Troubleshooting, incident recovery and validation",
+      "body": "The recovery story is documented as a generalized operational process: symptoms, investigation, root cause category, restoration, validation and preventive documentation. It avoids real logs, command history, hostnames or incident identifiers."
+    },
+    "stack": {
+      "kicker": "Technology Stack",
+      "title": "Technologies administered and integrated",
+      "body": "The portfolio names technologies as administered, configured and integrated components. It does not claim authorship of third-party software."
+    },
+    "lessons": {
+      "kicker": "Lessons Learned",
+      "title": "Operational lessons from hybrid infrastructure work"
+    },
+    "docs": {
+      "kicker": "Documentation",
+      "title": "Repository documentation",
+      "body": "Supporting Markdown files explain architecture, responsibilities, privacy scope, security posture, testing, recovery and maintenance without exposing production details."
+    }
+  },
+  "overview": {
+    "outcomes": [
+      "Centralized web and mail services under a maintainable operating model.",
+      "Enabled secure internal and external access without publishing production identifiers.",
+      "Established encrypted connectivity between infrastructure locations.",
+      "Created repeatable validation, backup and recovery documentation."
+    ]
+  },
+  "challenge": {
+    "items": [
+      {
+        "title": "Public website delivery",
+        "body": "The platform needed to serve a corporate website through a controlled hosting path with HTTPS and reverse proxy awareness."
+      },
+      {
+        "title": "Mail access patterns",
+        "body": "Internal and external users needed reliable access to SMTP, IMAP and webmail without exposing unnecessary infrastructure detail."
+      },
+      {
+        "title": "Outbound routing control",
+        "body": "Different hosted domains required direct and relayed outbound SMTP concepts while keeping DNS authentication aligned."
+      }
+    ]
+  },
+  "role": {
+    "tags": [
+      "Website design",
+      "Website deployment",
+      "Linux administration",
+      "HestiaCP administration",
+      "Nginx hosting",
+      "Reverse proxy setup",
+      "Exim SMTP",
+      "Dovecot IMAP",
+      "Roundcube webmail",
+      "TLS management",
+      "DNS coordination",
+      "MikroTik routing",
+      "Firewall and NAT",
+      "WireGuard setup",
+      "HAProxy setup",
+      "SMTP relay integration",
+      "Monitoring and validation",
+      "Incident troubleshooting",
+      "Recovery documentation"
+    ]
+  },
+  "diagram": {
+    "externalUsers": "External Users",
+    "publicDns": "Public DNS",
+    "vps": "European VPS",
+    "tunnel": "Secure WireGuard Tunnel",
+    "router": "MikroTik Edge Router",
+    "reverseProxy": "Reverse Proxy Server",
+    "webMailServer": "HestiaCP Web and Mail Server",
+    "internalUsers": "Internal Users",
+    "website": "Website",
+    "email": "Email",
+    "webmail": "Webmail"
+  },
+  "web": {
+    "items": [
+      {
+        "title": "Static and dynamic delivery",
+        "body": "Implemented and deployed the website layer while keeping the portfolio separate from production source."
+      },
+      {
+        "title": "Hosting administration",
+        "body": "Configured HestiaCP and Nginx hosting behavior, TLS certificates and operational maintenance routines."
+      },
+      {
+        "title": "Reverse proxy integration",
+        "body": "Integrated a generalized reverse proxy path so public access could be routed through a controlled edge."
+      },
+      {
+        "title": "Health checks",
+        "body": "Used practical validation steps after hosting, TLS, routing or filesystem changes."
+      }
+    ]
+  },
+  "mail": {
+    "flow": [
+      "Inbound mail was coordinated through public DNS, MX concepts and a Linux-based mail server.",
+      "Exim handled SMTP submission and transport while Dovecot provided IMAP mailbox access.",
+      "Roundcube provided browser-based webmail for users who needed a managed web interface.",
+      "Outbound mail could use direct or relayed paths depending on the hosted domain policy.",
+      "SPF, DKIM, DMARC, MX and PTR concepts were documented as part of deliverability and trust."
+    ]
+  },
+  "connectivity": {
+    "items": [
+      {
+        "title": "External entry point",
+        "body": "A European VPS acted as a sanitized public edge for selected access paths."
+      },
+      {
+        "title": "Encrypted tunnel",
+        "body": "WireGuard provided a secure site-to-site transport concept between infrastructure locations."
+      },
+      {
+        "title": "Edge routing",
+        "body": "MikroTik RouterOS handled firewall, NAT and policy-based routing responsibilities."
+      },
+      {
+        "title": "Service relay",
+        "body": "HAProxy and SMTP relay behavior supported controlled external access and outbound delivery."
+      }
+    ]
+  },
+  "security": {
+    "items": [
+      "No production identifiers are published in this repository.",
+      "TLS, DNS authentication and access boundaries are described at a high level.",
+      "Credentials, keys, backups, mailbox data and configuration exports are excluded.",
+      "Privacy scanners are included to catch prohibited names, addresses and secret patterns.",
+      "The documentation is a portfolio narrative, not deployment guidance."
+    ]
+  },
+  "recovery": {
+    "timeline": [
+      "Symptoms were documented from user-visible behavior and service health checks.",
+      "Investigation separated website files, control panel files, mail services and routing layers.",
+      "Root cause category: hosting control panel application dependencies became unavailable after a filesystem-related change.",
+      "Recovery focused on restoring required application files, validating services and avoiding unrelated changes.",
+      "Preventive actions emphasized backup verification, path validation and clearer recovery notes."
+    ]
+  },
+  "stack": {
+    "groups": [
+      {
+        "title": "Web and hosting",
+        "items": ["HTML", "CSS", "JavaScript", "Linux", "Ubuntu Server", "HestiaCP", "Nginx", "TLS"]
+      },
+      {
+        "title": "Mail",
+        "items": ["Exim", "Dovecot", "Roundcube", "SMTP", "IMAP", "SPF", "DKIM", "DMARC", "MX", "PTR"]
+      },
+      {
+        "title": "Network",
+        "items": ["MikroTik RouterOS", "WireGuard", "HAProxy", "NAT", "Firewall", "Policy-Based Routing", "DNS", "TCP/IP"]
+      },
+      {
+        "title": "Operations",
+        "items": ["Bash", "Logging", "Monitoring", "Backup", "Incident Recovery", "Troubleshooting", "Technical Documentation"]
+      }
+    ]
+  },
+  "lessons": {
+    "items": [
+      "Separate production configuration from public documentation.",
+      "Test restore procedures, not only backup creation.",
+      "Treat control panel files separately from hosted website files.",
+      "Validate filesystem paths before destructive operations.",
+      "Keep network and mail routing documentation current.",
+      "Use explicit health checks after infrastructure changes.",
+      "Protect keys and credentials from version control.",
+      "Use staged changes for critical mail systems.",
+      "Verify DNS, TLS and routing together.",
+      "Keep public portfolio material sanitized."
+    ]
+  },
+  "footer": {
+    "notice": "Anonymous portfolio case study. No production identifiers, credentials, screenshots or configuration are included.",
+    "author": "Author"
+  }
+}

@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hybrid Corporate Web and Mail Infrastructure | Milad</title>
+    <meta name="description" content="An anonymous multilingual infrastructure engineering case study covering Linux hosting, mail services, secure remote access, MikroTik networking and hybrid connectivity.">
+    <meta property="og:title" content="Hybrid Corporate Web and Mail Infrastructure | Milad">
+    <meta property="og:description" content="An anonymous multilingual infrastructure engineering case study covering Linux hosting, mail services, secure remote access, MikroTik networking and hybrid connectivity.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#101820">
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="accessibility.skip">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="container nav-shell">
+        <a class="brand" href="#top" aria-label="Hybrid Corporate Web and Mail Infrastructure" data-i18n-attr="aria-label:meta.title">
+          <img src="assets/icons/mark.svg" alt="" width="36" height="36">
+          <span data-i18n="brand.short">Hybrid Infrastructure</span>
+        </a>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation" data-i18n-attr="aria-label:accessibility.openMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav id="site-nav" class="site-nav" data-nav>
+          <a href="#overview" data-i18n="nav.overview">Overview</a>
+          <a href="#challenge" data-i18n="nav.challenge">Challenge</a>
+          <a href="#role" data-i18n="nav.role">My Role</a>
+          <a href="#architecture" data-i18n="nav.architecture">Architecture</a>
+          <a href="#web" data-i18n="nav.web">Web Platform</a>
+          <a href="#mail" data-i18n="nav.mail">Mail Platform</a>
+          <a href="#connectivity" data-i18n="nav.connectivity">Connectivity</a>
+          <a href="#security" data-i18n="nav.security">Security</a>
+          <a href="#recovery" data-i18n="nav.recovery">Recovery</a>
+          <a href="#stack" data-i18n="nav.stack">Technology Stack</a>
+          <a href="#lessons" data-i18n="nav.lessons">Lessons Learned</a>
+        </nav>
+        <div class="language-switcher" role="group" aria-label="Language selector" data-i18n-attr="aria-label:accessibility.languageSelector">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="de" aria-pressed="false">DE</button>
+          <button type="button" data-lang="fa" aria-pressed="false">FA</button>
+          <button type="button" data-lang="ar" aria-pressed="false">AR</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="top" class="hero section-observe">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="hero.label">Sanitized Portfolio Case Study</p>
+            <h1 data-i18n="hero.title">Hybrid Corporate Web and Mail Infrastructure</h1>
+            <p class="hero-lead" data-i18n="hero.lead">An anonymous engineering case study covering website delivery, Linux hosting, enterprise mail services, secure remote access and hybrid network integration.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="#architecture" data-i18n="hero.primaryAction">Explore Architecture</a>
+              <a class="button secondary" href="README.md" data-i18n="hero.secondaryAction">Open Repository README</a>
+            </div>
+          </div>
+          <div class="hero-visual" aria-label="Abstract infrastructure illustration" data-i18n-attr="aria-label:accessibility.heroVisual">
+            <img src="assets/images/infrastructure-abstract.svg" alt="" aria-hidden="true">
+          </div>
+        </div>
+      </section>
+
+      <section id="overview" class="section section-observe">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker" data-i18n="sections.overview.kicker">Overview</p>
+            <h2 data-i18n="sections.overview.title">A unified web, mail and network operations case study</h2>
+          </div>
+          <div>
+            <p data-i18n="sections.overview.body">This portfolio describes a sanitized infrastructure project that brought together a corporate website, Linux-based hosting, managed mail services, reverse proxying, secure external access, routed internal access, DNS authentication, backup planning and operational troubleshooting.</p>
+            <div class="outcome-list" data-list="overview.outcomes">
+              <div>Centralized web and mail services under a maintainable operating model.</div>
+              <div>Enabled secure internal and external access without publishing production identifiers.</div>
+              <div>Established encrypted connectivity between infrastructure locations.</div>
+              <div>Created repeatable validation, backup and recovery documentation.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="challenge" class="section muted section-observe">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker" data-i18n="sections.challenge.kicker">Challenge</p>
+            <h2 data-i18n="sections.challenge.title">Balancing public delivery, internal reliability and mail control</h2>
+            <p data-i18n="sections.challenge.body">The organization needed a maintainable platform for website delivery and corporate email while supporting different access paths for internal and external users. The architecture also needed practical security controls, reliable DNS and email authentication, and recovery procedures that could be used during incidents.</p>
+          </div>
+          <div class="card-grid" data-cards="challenge.items">
+            <article class="info-card">
+              <h3>Public website delivery</h3>
+              <p>The platform needed to serve a corporate website through a controlled hosting path with HTTPS and reverse proxy awareness.</p>
+            </article>
+            <article class="info-card">
+              <h3>Mail access patterns</h3>
+              <p>Internal and external users needed reliable access to SMTP, IMAP and webmail without exposing unnecessary infrastructure detail.</p>
+            </article>
+            <article class="info-card">
+              <h3>Outbound routing control</h3>
+              <p>Different hosted domains required direct and relayed outbound SMTP concepts while keeping DNS authentication aligned.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="role" class="section section-observe">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker" data-i18n="sections.role.kicker">My Role</p>
+            <h2 data-i18n="sections.role.title">Milad owned the integration work across web, Linux, mail and network layers</h2>
+          </div>
+          <div>
+            <p data-i18n="sections.role.body">Milad designed and implemented the website presentation layer, deployed and administered the hosting environment, configured mail services, integrated secure connectivity, coordinated DNS authentication and maintained troubleshooting documentation. The work focused on installing, configuring, integrating, securing and operating established technologies.</p>
+            <div class="tag-cloud" data-tags="role.tags">
+              <span>Website design</span>
+              <span>Linux administration</span>
+              <span>Mail infrastructure</span>
+              <span>Reverse proxy setup</span>
+              <span>MikroTik routing</span>
+              <span>Incident recovery</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture" class="section muted section-observe">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker" data-i18n="sections.architecture.kicker">Architecture</p>
+            <h2 data-i18n="sections.architecture.title">Generalized hybrid architecture</h2>
+            <p data-i18n="sections.architecture.body">The public portfolio diagram intentionally removes provider names, addresses, hostnames, interface names and exact routing values. It shows only the engineering responsibilities and the relationship between major components.</p>
+          </div>
+          <div class="architecture-map" aria-label="High-level system architecture" data-i18n-attr="aria-label:accessibility.architectureMap">
+            <div class="node external" data-i18n="diagram.externalUsers">External Users</div>
+            <div class="node dns" data-i18n="diagram.publicDns">Public DNS</div>
+            <div class="node vps" data-i18n="diagram.vps">European VPS</div>
+            <div class="node tunnel" data-i18n="diagram.tunnel">Secure WireGuard Tunnel</div>
+            <div class="node router" data-i18n="diagram.router">MikroTik Edge Router</div>
+            <div class="node reverse" data-i18n="diagram.reverseProxy">Reverse Proxy Server</div>
+            <div class="node server" data-i18n="diagram.webMailServer">HestiaCP Web and Mail Server</div>
+            <div class="node internal" data-i18n="diagram.internalUsers">Internal Users</div>
+            <div class="node services">
+              <span data-i18n="diagram.website">Website</span>
+              <span data-i18n="diagram.email">Email</span>
+              <span data-i18n="diagram.webmail">Webmail</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="web" class="section section-observe">
+        <div class="container split-cards">
+          <div>
+            <p class="section-kicker" data-i18n="sections.web.kicker">Web Platform</p>
+            <h2 data-i18n="sections.web.title">Website delivery and Linux hosting administration</h2>
+            <p data-i18n="sections.web.body">The case study covers website design and implementation, deployment to a Linux hosting environment, HestiaCP administration, Nginx hosting, reverse proxy behavior, TLS management and practical maintenance routines.</p>
+          </div>
+          <div class="card-grid compact" data-cards="web.items">
+            <article class="info-card">
+              <h3>Static and dynamic delivery</h3>
+              <p>Implemented and deployed the website layer while keeping the portfolio separate from production source.</p>
+            </article>
+            <article class="info-card">
+              <h3>Hosting administration</h3>
+              <p>Configured HestiaCP and Nginx hosting behavior, TLS certificates and operational maintenance routines.</p>
+            </article>
+            <article class="info-card">
+              <h3>Reverse proxy integration</h3>
+              <p>Integrated a generalized reverse proxy path so public access could be routed through a controlled edge.</p>
+            </article>
+            <article class="info-card">
+              <h3>Health checks</h3>
+              <p>Used practical validation steps after hosting, TLS, routing or filesystem changes.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="mail" class="section muted section-observe">
+        <div class="container split-cards">
+          <div>
+            <p class="section-kicker" data-i18n="sections.mail.kicker">Mail Platform</p>
+            <h2 data-i18n="sections.mail.title">Corporate email services with controlled delivery paths</h2>
+            <p data-i18n="sections.mail.body">Mail operations included Exim SMTP, Dovecot IMAP, Roundcube webmail, TLS access, internal and external mailbox access, relay integration and domain-based outbound mail routing concepts.</p>
+          </div>
+          <div class="flow-list" data-flow="mail.flow">
+            <div>Inbound mail was coordinated through public DNS, MX concepts and a Linux-based mail server.</div>
+            <div>Exim handled SMTP submission and transport while Dovecot provided IMAP mailbox access.</div>
+            <div>Roundcube provided browser-based webmail for users who needed a managed web interface.</div>
+            <div>Outbound mail could use direct or relayed paths depending on the hosted domain policy.</div>
+            <div>SPF, DKIM, DMARC, MX and PTR concepts were documented as part of deliverability and trust.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="connectivity" class="section section-observe">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker" data-i18n="sections.connectivity.kicker">Connectivity</p>
+            <h2 data-i18n="sections.connectivity.title">Secure external entry and internal routed access</h2>
+          </div>
+          <div>
+            <p data-i18n="sections.connectivity.body">A European VPS provided a controlled external entry point. HAProxy and SMTP relay behavior were integrated with an encrypted WireGuard path toward the internal edge router, where firewall, NAT and policy-based routing decisions were maintained at a high level.</p>
+            <div class="card-grid compact" data-cards="connectivity.items">
+              <article class="info-card">
+                <h3>External entry point</h3>
+                <p>A European VPS acted as a sanitized public edge for selected access paths.</p>
+              </article>
+              <article class="info-card">
+                <h3>Encrypted tunnel</h3>
+                <p>WireGuard provided a secure site-to-site transport concept between infrastructure locations.</p>
+              </article>
+              <article class="info-card">
+                <h3>Edge routing</h3>
+                <p>MikroTik RouterOS handled firewall, NAT and policy-based routing responsibilities.</p>
+              </article>
+              <article class="info-card">
+                <h3>Service relay</h3>
+                <p>HAProxy and SMTP relay behavior supported controlled external access and outbound delivery.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="security" class="section muted section-observe">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker" data-i18n="sections.security.kicker">Security</p>
+            <h2 data-i18n="sections.security.title">Sanitized security approach</h2>
+          </div>
+          <div>
+            <p data-i18n="sections.security.body">Security work focused on TLS, firewall rules, NAT boundaries, authentication records, reduced exposure, credential hygiene, backup separation and public documentation that never exposes production values.</p>
+            <div class="check-list" data-list="security.items">
+              <div>No production identifiers are published in this repository.</div>
+              <div>TLS, DNS authentication and access boundaries are described at a high level.</div>
+              <div>Credentials, keys, backups, mailbox data and configuration exports are excluded.</div>
+              <div>Privacy scanners are included to catch prohibited names, addresses and secret patterns.</div>
+              <div>The documentation is a portfolio narrative, not deployment guidance.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="recovery" class="section section-observe">
+        <div class="container split-cards">
+          <div>
+            <p class="section-kicker" data-i18n="sections.recovery.kicker">Recovery</p>
+            <h2 data-i18n="sections.recovery.title">Troubleshooting, incident recovery and validation</h2>
+            <p data-i18n="sections.recovery.body">The recovery story is documented as a generalized operational process: symptoms, investigation, root cause category, restoration, validation and preventive documentation. It avoids real logs, command history, hostnames or incident identifiers.</p>
+          </div>
+          <div class="timeline" data-timeline="recovery.timeline">
+            <div>Symptoms were documented from user-visible behavior and service health checks.</div>
+            <div>Investigation separated website files, control panel files, mail services and routing layers.</div>
+            <div>Root cause category: hosting control panel application dependencies became unavailable after a filesystem-related change.</div>
+            <div>Recovery focused on restoring required application files, validating services and avoiding unrelated changes.</div>
+            <div>Preventive actions emphasized backup verification, path validation and clearer recovery notes.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="stack" class="section muted section-observe">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker" data-i18n="sections.stack.kicker">Technology Stack</p>
+            <h2 data-i18n="sections.stack.title">Technologies administered and integrated</h2>
+            <p data-i18n="sections.stack.body">The portfolio names technologies as administered, configured and integrated components. It does not claim authorship of third-party software.</p>
+          </div>
+          <div class="stack-grid" data-stacks="stack.groups">
+            <article class="stack-card">
+              <h3>Web and hosting</h3>
+              <ul><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Linux</li><li>Ubuntu Server</li><li>HestiaCP</li><li>Nginx</li><li>TLS</li></ul>
+            </article>
+            <article class="stack-card">
+              <h3>Mail</h3>
+              <ul><li>Exim</li><li>Dovecot</li><li>Roundcube</li><li>SMTP</li><li>IMAP</li><li>SPF</li><li>DKIM</li><li>DMARC</li><li>MX</li><li>PTR</li></ul>
+            </article>
+            <article class="stack-card">
+              <h3>Network</h3>
+              <ul><li>MikroTik RouterOS</li><li>WireGuard</li><li>HAProxy</li><li>NAT</li><li>Firewall</li><li>Policy-Based Routing</li><li>DNS</li><li>TCP/IP</li></ul>
+            </article>
+            <article class="stack-card">
+              <h3>Operations</h3>
+              <ul><li>Bash</li><li>Logging</li><li>Monitoring</li><li>Backup</li><li>Incident Recovery</li><li>Troubleshooting</li><li>Technical Documentation</li></ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="lessons" class="section section-observe">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker" data-i18n="sections.lessons.kicker">Lessons Learned</p>
+            <h2 data-i18n="sections.lessons.title">Operational lessons from hybrid infrastructure work</h2>
+          </div>
+          <div>
+            <div class="check-list" data-list="lessons.items">
+              <div>Separate production configuration from public documentation.</div>
+              <div>Test restore procedures, not only backup creation.</div>
+              <div>Treat control panel files separately from hosted website files.</div>
+              <div>Validate filesystem paths before destructive operations.</div>
+              <div>Keep network and mail routing documentation current.</div>
+              <div>Use explicit health checks after infrastructure changes.</div>
+              <div>Protect keys and credentials from version control.</div>
+              <div>Use staged changes for critical mail systems.</div>
+              <div>Verify DNS, TLS and routing together.</div>
+              <div>Keep public portfolio material sanitized.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="documentation" class="section muted section-observe">
+        <div class="container section-heading">
+          <p class="section-kicker" data-i18n="sections.docs.kicker">Documentation</p>
+          <h2 data-i18n="sections.docs.title">Repository documentation</h2>
+          <p data-i18n="sections.docs.body">Supporting Markdown files explain architecture, responsibilities, privacy scope, security posture, testing, recovery and maintenance without exposing production details.</p>
+          <div class="doc-links">
+            <a href="docs/architecture.md">architecture.md</a>
+            <a href="docs/mail-platform.md">mail-platform.md</a>
+            <a href="docs/security.md">security.md</a>
+            <a href="PRIVACY_REVIEW.md">PRIVACY_REVIEW.md</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <p data-i18n="footer.notice">Anonymous portfolio case study. No production identifiers, credentials, screenshots or configuration are included.</p>
+        <p><span data-i18n="footer.author">Author</span>: Milad</p>
+      </div>
+    </footer>
+
+    <noscript>
+      <div class="noscript">
+        This portfolio uses JavaScript for multilingual switching. The fallback language is English. No tracking, cookies or analytics are used.
+      </div>
+    </noscript>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
