@@ -22,15 +22,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
       - name: Validate locales
         run: node scripts/validate-locales.js
-      - name: Run privacy scan
+
+      - name: Check publication content
         run: bash scripts/privacy-scan.sh
+
+      - name: Check public links
+        run: bash scripts/check-links-relative.sh
+
+      - name: Build public artifact
+        run: |
+          mkdir -p _site
+          cp index.html 404.html robots.txt _site/
+          cp -R assets locales _site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
+
       - name: Deploy
         uses: actions/deploy-pages@v4
