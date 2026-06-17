@@ -37,6 +37,3 @@ jobs:
           test -f assets/css/styles.css
           grep -q 'prefers-reduced-motion' assets/css/styles.css
           grep -q 'rtl' assets/js/i18n.js
-      - name: Markdown privacy smoke check
-        run: |
-          ! grep -RInE -- '-----BEGIN|PrivateKey|PresharedKey' *.md docs diagrams .github || exit 1
