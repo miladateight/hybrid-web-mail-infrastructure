@@ -2,110 +2,223 @@
 
 [English](README.md) | [Deutsch](README.de.md) | [فارسی](README.fa.md) | [العربية](README.ar.md)
 
-## Anonymous Case Study Notice
+> **Sanitized production case study:** This repository documents a real infrastructure project that I designed, implemented, operated and troubleshot. Company identity, domains, addresses, credentials, production configuration, website source, screenshots, logs and backups are intentionally excluded.
 
-This repository is an anonymous portfolio case study. It is not the production website, not an infrastructure backup, and not a deployment repository. All company identity, domains, hostnames, network addresses, credentials, configuration exports, screenshots and production source files have been intentionally omitted.
+[View the live portfolio](https://miladateight.github.io/hybrid-web-mail-infrastructure/)
 
-## Overview
+## Executive Summary
 
-This project presents a multilingual GitHub Pages portfolio about a corporate web, mail and hybrid network infrastructure project completed by Milad. The case study explains the engineering decisions, responsibilities and operating practices behind a unified platform for website delivery, Linux hosting, corporate mail, secure external access and routed internal connectivity.
+This project combined corporate website delivery, Linux web and mail hosting, HestiaCP administration, Nginx, Exim, Dovecot, Roundcube, reverse proxying, an external VPS entry layer, HAProxy, WireGuard, MikroTik routing, firewall and NAT controls, policy-based routing, separate outbound SMTP delivery paths, DNS-based mail authentication, backup planning and incident recovery.
 
-## Project Challenge
+The public repository explains the engineering decisions and operational ownership without publishing values that could identify or expose the live environment.
 
-The organization needed a maintainable platform for a public corporate website, centralized web and mail hosting, reliable internal and external access, TLS-secured services, DNS-based mail authentication, controlled outbound mail paths, backup readiness and practical troubleshooting documentation.
+## Project Context
+
+The organization required one maintainable platform for its public website and corporate email services. Internal users needed dependable access through the company network, while external users required a controlled entry path. Outbound email delivery also had to follow different policies for different hosted sender domains.
+
+## Engineering Challenge
+
+The work required coordination across several layers:
+
+- Deliver a corporate website through a Linux hosting environment.
+- Operate web, SMTP, IMAP and webmail services from a centralized server platform.
+- Support different internal and external access paths.
+- Connect an external VPS to the internal edge through encrypted transport.
+- Apply firewall, NAT and policy-routing decisions at the MikroTik edge.
+- Route selected sender domains through an external SMTP relay while keeping other domains on direct delivery.
+- Keep DNS authentication, TLS, routing and service behavior aligned.
+- Build repeatable validation, backup and recovery procedures.
 
 ## My Role
 
-Milad designed and implemented the website layer, deployed the hosting environment, administered Linux services, configured HestiaCP, Nginx, Exim, Dovecot and Roundcube, integrated reverse proxy behavior, coordinated DNS authentication, configured secure connectivity concepts and documented recovery workflows.
+I owned the cross-layer integration work. I designed and deployed the website presentation layer, administered the Linux hosting platform, configured web and mail services, integrated network and proxy components, implemented mail-routing policy, validated service behavior and handled production troubleshooting and recovery documentation.
 
-## Responsibilities
+## What I Implemented
 
-- Website design and implementation.
-- Website deployment and hosting administration.
-- Linux server administration and service validation.
-- HestiaCP, Nginx and TLS management.
-- Exim SMTP, Dovecot IMAP and Roundcube webmail administration.
-- Internal and external access planning.
-- HAProxy, WireGuard and MikroTik RouterOS integration.
-- Firewall, NAT and policy-based routing coordination.
-- Domain-based outbound SMTP routing concepts.
-- Backup planning, monitoring, troubleshooting and recovery documentation.
+- Designed and deployed the corporate website presentation layer.
+- Built and administered the Linux web and mail hosting environment.
+- Configured HestiaCP, Nginx, Exim, Dovecot and Roundcube.
+- Implemented internal and external web and mail access paths.
+- Integrated an external VPS through an encrypted WireGuard tunnel.
+- Configured HAProxy for controlled external service access.
+- Configured MikroTik firewall, NAT and policy-based routing.
+- Implemented domain-based outbound SMTP routing with direct and relayed delivery paths.
+- Configured and validated SPF, DKIM, DMARC, MX, PTR and TLS requirements.
+- Investigated mail queues, service logs, TLS behavior and routing failures.
+- Created backup, validation, troubleshooting and recovery procedures.
 
 ## High-Level Architecture
 
-The generalized architecture includes external users, internal users, Public DNS, a European VPS, HAProxy, SMTP relay behavior, a secure WireGuard tunnel, a MikroTik edge router, a reverse proxy server, a HestiaCP web and mail server, Nginx, Exim, Dovecot, Roundcube, backup storage, monitoring and logs.
+```mermaid
+flowchart TB
+  ExternalUsers["External Users"] --> ExternalVPS["External VPS"]
+  PublicDNS["Public DNS"] --> ExternalVPS
+  ExternalVPS --> EdgeServices["HAProxy and SMTP Relay"]
+  EdgeServices --> Tunnel["Encrypted WireGuard Tunnel"]
+  Tunnel --> Router["MikroTik Edge Router"]
 
-No real IP addresses, domains, hostnames, interface names, provider names or exact routing values are included.
+  InternalUsers["Internal Users"] --> Router
 
-## Website and Hosting Work
+  Router --> ReverseProxy["Reverse Proxy Server"]
+  Router --> HostingServer["Linux Web and Mail Server"]
+  ReverseProxy --> HostingServer
 
-The web portion covers a corporate website presentation layer, Linux hosting, HestiaCP administration, Nginx web hosting, reverse proxy integration, HTTPS and TLS management, static asset delivery and post-change health checks. The repository does not include the production website source or original company content.
+  HostingServer --> Website["Corporate Website"]
+  HostingServer --> SMTP["Exim SMTP"]
+  HostingServer --> IMAP["Dovecot IMAP"]
+  HostingServer --> Webmail["Roundcube Webmail"]
+  HostingServer --> Backup["Backup and Recovery"]
+  HostingServer --> Logs["Monitoring and Logs"]
+```
 
-## Mail Infrastructure
+The diagram is intentionally generalized. It shows component relationships and responsibility boundaries, not the exact production topology.
 
-The mail portion covers Exim SMTP, Dovecot IMAP, Roundcube webmail, TLS-secured mail access, internal and external mailbox access, DNS authentication and controlled outbound delivery concepts. Milad configured, administered and troubleshot these technologies; the case study does not claim he developed them.
+## Web Platform
 
-## Internal and External Access
+I designed and deployed the website layer, prepared it for Linux hosting, integrated HTTPS delivery and maintained the deployment files. Operational checks covered HTTP behavior, TLS validity, reverse-proxy behavior, filesystem permissions and service health after changes.
 
-Internal users reached services through the organization network path. External users reached selected public entry points through a generalized European VPS and proxy or relay layer. The description is intentionally conceptual and omits exact addresses and routing rules.
+## Hosting Platform
 
-## Hybrid Connectivity
+HestiaCP acted as the hosting control plane for web domains, mail domains, certificates, mailboxes and backups. Nginx served the web layer, while Linux service management, permissions, logs and generated-configuration behavior were handled as separate operational concerns.
 
-The project used a secure tunnel concept between infrastructure locations, with MikroTik RouterOS handling edge routing, firewall boundaries, NAT and policy-based routing responsibilities.
+## Mail Platform
 
-## Domain-Based SMTP Routing Concept
+I integrated and administered:
 
-Outbound mail delivery was planned around separate direct and relayed paths. The portfolio explains the concept without publishing real domains, selectors, DNS values, credentials or relay configuration.
+- **Exim** for SMTP receiving, submission, routing and transport selection.
+- **Dovecot** for IMAP mailbox access.
+- **Roundcube** for browser-based webmail.
+- **TLS** for protected client and server communication.
+- **DNS authentication** for identity and deliverability.
 
-## DNS and Email Authentication
+Troubleshooting included queue inspection, log analysis, route selection, TLS validation and separation of application, network and DNS failures.
 
-The project considered SPF, DKIM, DMARC, MX and PTR concepts as part of mail identity, deliverability and trust. Real record values are not present in this repository.
+## Internal Access Flow
 
-## Security Approach
+Internal users reached the hosting environment through the company network and MikroTik routing controls. This path reduced dependency on the external entry layer while keeping web, SMTP, IMAP and webmail services on the same managed hosting platform.
 
-Security work focused on TLS, restricted exposure, firewall boundaries, credential hygiene, configuration separation, privacy review, backup handling and safe public documentation.
+## External Access Flow
 
-## Backup and Recovery
+External users entered through a controlled VPS layer. HAProxy forwarded selected access flows through an encrypted WireGuard tunnel toward the internal edge, where MikroTik applied firewall, NAT and routing policy before traffic reached the hosting services.
 
-The case study explains backup planning, recovery validation and an incident recovery process in a sanitized way. It avoids real logs, filesystem paths, command history and unverified incident details.
+## Domain-Based SMTP Routing
 
-## Troubleshooting
+The hosting environment served multiple sender domains with different outbound requirements. I implemented sender-domain classification in the mail-routing layer so that each message selected one of two paths:
 
-Troubleshooting is presented as a structured engineering process: observe symptoms, isolate layers, verify service health, identify a root cause category, recover required components, validate behavior and document preventive actions.
+1. Direct outbound SMTP delivery.
+2. Secure delivery through an external SMTP relay.
+
+This separation allowed one hosted environment to maintain different delivery policies without forcing every domain through the same route. Validation covered router and transport selection, queue behavior, relay reachability, TLS and DNS alignment.
+
+```text
+if sender domain belongs to relay policy:
+    select secure external relay transport
+else:
+    select direct outbound transport
+```
+
+The example above is conceptual pseudocode, not production configuration.
+
+## DNS and Mail Authentication
+
+I configured and validated the relationships between MX, SPF, DKIM, DMARC, PTR, mail hostnames and TLS certificates. These records and controls were reviewed together because deliverability failures often cross DNS, identity, transport and reputation boundaries.
+
+## Network and Security Controls
+
+The implementation included:
+
+- Controlled public exposure through an external entry layer.
+- MikroTik firewall and NAT boundaries.
+- Policy-based routing for selected traffic.
+- Encrypted WireGuard transport between infrastructure locations.
+- TLS for web and mail access.
+- Restricted administrative access and credential protection.
+- Separation of public portfolio material from production configuration.
+- Backup protection, logging, patching and change validation.
+
+## Validation and Operations
+
+Operational validation covered:
+
+- Website availability and HTTPS behavior.
+- TLS certificate and protocol checks.
+- DNS and mail-authentication review.
+- SMTP and IMAP access validation.
+- Mail queue and route-selection inspection.
+- WireGuard peer and encrypted-path checks.
+- HAProxy backend reachability.
+- MikroTik firewall, NAT and routing counters.
+- Backup creation and restore readiness.
+- Service-by-service checks after changes.
+
+The public case study omits live evidence and operational identifiers.
+
+## Incident Recovery Case Study
+
+A filesystem-related change was followed by an HTTP 500 failure on the hosting control-panel login. Investigation showed that a required PHP dependency loader was unavailable and vendor dependencies required validation or restoration.
+
+The recovery process separated hosted website content from the control-panel application, restored the required application dependency layer, validated service ownership and availability, and then checked web, mail and management services independently. The incident reinforced the need for path validation, change isolation, dependency checks and tested recovery notes.
+
+See [Incident Recovery](docs/incident-recovery.md).
+
+## Outcomes
+
+- Centralized website and corporate mail operations on a maintainable Linux platform.
+- Enabled controlled internal and external access to the same managed services.
+- Established encrypted connectivity between external and internal infrastructure layers.
+- Implemented separate outbound mail-delivery policies by sender domain.
+- Improved troubleshooting visibility through logs, queues, counters and health checks.
+- Created repeatable backup, validation and recovery documentation.
+
+No fabricated metrics or availability claims are included.
 
 ## Technologies
 
-Web and hosting: HTML, CSS, JavaScript, Linux, Ubuntu Server, HestiaCP, Nginx, TLS.
-
-Mail: Exim, Dovecot, Roundcube, SMTP, IMAP, SPF, DKIM, DMARC, MX, PTR.
-
-Network: MikroTik RouterOS, WireGuard, HAProxy, NAT, Firewall, Policy-Based Routing, DNS, TCP/IP.
-
-Operations: Bash, logging, monitoring, backup, incident recovery, troubleshooting and technical documentation.
+**Web and hosting:** HTML, CSS, JavaScript, Linux, Ubuntu Server, HestiaCP, Nginx, reverse proxying, TLS  
+**Mail:** Exim, Dovecot, Roundcube, SMTP, IMAP, SPF, DKIM, DMARC, MX, PTR  
+**Network:** MikroTik RouterOS, WireGuard, HAProxy, NAT, firewall, policy-based routing, DNS, TCP/IP  
+**Operations:** Bash, logging, monitoring, backup, incident recovery, troubleshooting, technical documentation
 
 ## Skills Demonstrated
 
-End-to-end infrastructure ownership, cross-domain troubleshooting, Linux administration, mail infrastructure administration, network engineering, secure remote access, reverse proxy configuration, SMTP routing, DNS management, TLS management, backup planning, incident recovery and technical documentation.
+- End-to-end infrastructure ownership
+- Linux server administration
+- Network and mail troubleshooting
+- Web and mail hosting operations
+- Secure remote-access architecture
+- Reverse-proxy and SMTP-relay integration
+- Domain-based mail routing
+- DNS and TLS validation
+- Backup and recovery planning
+- Root-cause analysis
+- Production support and documentation
 
-## Repository Structure
+## Repository Documentation
 
-The repository contains a multilingual static website, locale files, documentation, Mermaid diagrams, privacy scanners, validation scripts and GitHub workflows for Pages deployment and quality checks.
+- [Architecture](docs/architecture.md)
+- [Web Platform](docs/web-platform.md)
+- [Hosting Platform](docs/hosting-platform.md)
+- [Mail Platform](docs/mail-platform.md)
+- [Internal and External Access](docs/internal-external-access.md)
+- [Mail Routing](docs/mail-routing.md)
+- [Security](docs/security.md)
+- [Testing Strategy](docs/testing-strategy.md)
+- [Incident Recovery](docs/incident-recovery.md)
+- [Project Review](PROJECT_REVIEW.md)
 
 ## Running the Portfolio Locally
-
-Use a local HTTP server because translation files are loaded from JSON:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Then open the local server in a browser. Direct `file://` opening may not load translation JSON consistently.
+Then open `http://localhost:8080`. Direct `file://` access may block locale JSON loading in some browsers.
 
 ## Privacy and Confidentiality
 
-This repository is sanitized for public portfolio review. It excludes real company identity, production website code, domains, hostnames, IP addresses, credentials, keys, DNS values, screenshots, mailbox data, backups, logs and configuration exports.
+This repository contains no real company identity, domains, addresses, hostnames, credentials, keys, DNS values, production configuration, original website source, screenshots, mailbox content, backups or logs. It is a technical portfolio narrative, not a deployment guide or infrastructure backup.
 
 ## Author
 
-Milad  
-IT Infrastructure and DevOps Engineer
+**Milad**  
+IT Infrastructure Engineer | DevOps-Focused
