@@ -1,21 +1,18 @@
 # Project Scope
 
-## What This Portfolio Covers
+## Included
 
-This repository covers a sanitized engineering case study for a hybrid corporate web and mail infrastructure project. It explains Milad's responsibilities across website delivery, Linux hosting, mail services, secure access, network routing, DNS authentication, backup planning, monitoring and recovery documentation.
+This repository documents Milad's implementation and operation of a sanitized corporate web, mail and hybrid network platform. It covers website delivery, Linux hosting, mail services, internal and external access, encrypted connectivity, MikroTik routing, domain-based SMTP routing, DNS authentication, backup planning, validation and incident recovery.
 
-## What It Excludes
+## Excluded
 
-- Real company identity.
-- Real website source code or content.
-- Real domains, hostnames, addresses, DNS values or interface names.
-- Production configuration for HestiaCP, Exim, Dovecot, Roundcube, Nginx, HAProxy, WireGuard, MikroTik RouterOS, DNS, SMTP relay, firewall, NAT or policy routing.
-- Backups, logs, screenshots, mailbox data, keys, credentials or exports.
+- Company identity and branding.
+- Production website source and content.
+- Domains, hostnames, addresses, ports and exact routes.
+- Credentials, keys, mailboxes, logs, screenshots and backups.
+- Production configuration for HestiaCP, Nginx, Exim, Dovecot, Roundcube, HAProxy, WireGuard, MikroTik or DNS.
+- Commands that modify the live environment.
 
-## Why Values Are Sanitized
+## Purpose
 
-Public portfolio material should demonstrate engineering judgment without creating operational risk. The repository therefore uses generic component names and high-level diagrams instead of production identifiers.
-
-## What This Is Not
-
-This is not a production backup, not deployment documentation, not a runbook for live systems and not the original corporate website.
+The repository demonstrates engineering ownership without becoming an operational blueprint or production backup.
