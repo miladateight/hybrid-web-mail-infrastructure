@@ -61,12 +61,14 @@ flowchart TB
 
   Router --> ReverseProxy["Reverse Proxy Server"]
   Router --> HostingServer["Linux Web and Mail Server"]
+
   ReverseProxy --> HostingServer
 
   HostingServer --> Website["Corporate Website"]
   HostingServer --> SMTP["Exim SMTP"]
   HostingServer --> IMAP["Dovecot IMAP"]
   HostingServer --> Webmail["Roundcube Webmail"]
+
   HostingServer --> Backup["Backup and Recovery"]
   HostingServer --> Logs["Monitoring and Logs"]
 ```
@@ -159,7 +161,7 @@ A filesystem-related change was followed by an HTTP 500 failure on the hosting c
 
 The recovery process separated hosted website content from the control-panel application, restored the required application dependency layer, validated service ownership and availability, and then checked web, mail and management services independently. The incident reinforced the need for path validation, change isolation, dependency checks and tested recovery notes.
 
-See [Incident Recovery](docs/incident-recovery.md).
+See [Service Restoration](docs/service-restoration.md).
 
 ## Outcomes
 
@@ -195,16 +197,13 @@ No fabricated metrics or availability claims are included.
 
 ## Repository Documentation
 
-- [Architecture](docs/architecture.md)
+- [System Design](docs/system-design.md)
 - [Web Platform](docs/web-platform.md)
 - [Hosting Platform](docs/hosting-platform.md)
 - [Mail Platform](docs/mail-platform.md)
-- [Internal and External Access](docs/internal-external-access.md)
-- [Mail Routing](docs/mail-routing.md)
-- [Security](docs/security.md)
-- [Testing Strategy](docs/testing-strategy.md)
-- [Incident Recovery](docs/incident-recovery.md)
-- [Project Review](PROJECT_REVIEW.md)
+- [Sender-Domain Delivery Policy](docs/delivery-policy.md)
+- [Service Restoration](docs/service-restoration.md)
+- [Project Status](docs/project-status.md)
 
 ## Running the Portfolio Locally
 
