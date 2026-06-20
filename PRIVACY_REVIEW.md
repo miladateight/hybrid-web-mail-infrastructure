@@ -19,9 +19,10 @@
 | No employee data | Passed | Only the portfolio author name is used. |
 | No customer data | Passed | No customer data is included. |
 | No supplier data | Passed | No supplier data is included. |
+| No production artifact in Pages bundle | Passed | Pages workflow stages only public site assets. |
 
 ## Review Notes
 
-The repository is intended to remain a high-level portfolio narrative. Scanner results should be recorded without printing secret values.
+The repository is intended to remain a high-level portfolio narrative. Scanner results should be recorded without printing secret values. Public examples should use generalized labels such as European VPS, internal edge router and hosted domain policy instead of real production names.
 
-Last local review: privacy scanner passed, locale validation passed and direct prohibited-term search found no matches.
+Last local review: privacy scanner passed, locale validation passed, link validation passed and direct prohibited-term search found no matches.

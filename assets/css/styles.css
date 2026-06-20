@@ -234,12 +234,12 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(2.7rem, 7vw, 5.8rem);
+  font-size: clamp(2.7rem, 4.8rem, 5.8rem);
   max-width: 900px;
 }
 
 h2 {
-  font-size: clamp(1.85rem, 3.1vw, 3rem);
+  font-size: clamp(1.85rem, 2.45rem, 3rem);
 }
 
 h3 {
@@ -254,7 +254,7 @@ p {
 }
 
 .hero-lead {
-  font-size: clamp(1.08rem, 2vw, 1.35rem);
+  font-size: clamp(1.08rem, 1.2rem, 1.35rem);
   max-width: 760px;
 }
 
@@ -668,6 +668,14 @@ p {
 
   .hero {
     padding-block: 44px 30px;
+  }
+
+  h1 {
+    font-size: 2.55rem;
+  }
+
+  h2 {
+    font-size: 1.9rem;
   }
 
   .section {

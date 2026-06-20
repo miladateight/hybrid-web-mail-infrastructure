@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added implemented scope, design decision, routing, validation and outcome sections to the multilingual site.
+- Expanded German, Persian and Arabic locale coverage for all new site sections.
+- Expanded access, mail-routing, security, DNS, backup and troubleshooting documentation.
+- Strengthened local validation, privacy scanning, link checks and GitHub Pages artifact staging.
+
 ## 1.1.0 - 2026-06-17
 
 - Strengthened implementation-focused case study language.

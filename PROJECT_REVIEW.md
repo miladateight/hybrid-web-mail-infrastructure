@@ -11,9 +11,10 @@
 - English, German, Persian and Arabic website and README content.
 - RTL support for Persian and Arabic.
 - Embedded architecture and mail-routing diagrams.
-- Expanded architecture, hosting, mail, access, security, testing and incident documentation.
-- Privacy scanning, locale validation, link checking and required-file checks.
-- Static GitHub Pages deployment workflow.
+- Expanded site sections for implemented scope, design decisions, routing, validation and outcomes.
+- Expanded architecture, hosting, mail, access, security, testing, DNS, backup and incident documentation.
+- Privacy scanning, locale validation, link checking, required-file checks and static asset checks.
+- Static GitHub Pages deployment workflow that stages only public site assets.
 
 ## Validation Performed
 
@@ -23,6 +24,7 @@
 - Privacy and secret-pattern scanning.
 - Required-file validation.
 - Static HTML and CSS structure checks.
+- GitHub Pages artifact boundary review.
 
 ## Remaining Manual Checks
 
@@ -30,6 +32,7 @@
 - Native-speaker review of German and Arabic wording.
 - Verification of GitHub Pages deployment after merge.
 - Repository About description and topics.
+- Optional final visual review of the deployed Pages URL.
 
 ## Privacy Status
 

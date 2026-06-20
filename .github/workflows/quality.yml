@@ -2,7 +2,7 @@ name: Quality
 
 on:
   push:
-    branches: [main]
+    branches: [main, complete-case-study-v1.1]
   pull_request:
   workflow_dispatch:
 
@@ -15,28 +15,41 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Required files
+        run: node scripts/validate-required-files.js
       - name: Locale consistency
         run: node scripts/validate-locales.js
       - name: JavaScript syntax
         run: |
           node --check assets/js/app.js
           node --check assets/js/i18n.js
+          node --check scripts/link-check.js
+          node --check scripts/privacy-scan.js
           node --check scripts/validate-locales.js
+          node --check scripts/validate-required-files.js
+          node --check scripts/validate-html.js
+          node --check scripts/validate-css.js
+      - name: JSON syntax
+        run: |
+          node -e "for (const f of ['locales/en.json','locales/de.json','locales/fa.json','locales/ar.json']) JSON.parse(require('fs').readFileSync(f, 'utf8'))"
       - name: Local link check
         run: bash scripts/link-check.sh
       - name: Privacy scan
         run: bash scripts/privacy-scan.sh
-      - name: HTML smoke check
+      - name: HTML validation
+        run: node scripts/validate-html.js
+      - name: CSS validation
+        run: node scripts/validate-css.js
+      - name: Markdown lint
+        run: npx --yes markdownlint-cli2
+      - name: YAML lint
         run: |
-          test -f index.html
-          test -f 404.html
-          grep -q '<main id="main">' index.html
-          grep -q 'data-lang="en"' index.html
-      - name: CSS smoke check
-        run: |
-          test -f assets/css/styles.css
-          grep -q 'prefers-reduced-motion' assets/css/styles.css
-          grep -q 'rtl' assets/js/i18n.js
+          python -m pip install --user yamllint
+          yamllint .github/workflows
+      - name: Mermaid diagram check
+        run: grep -R "```mermaid" README.md README.de.md README.fa.md README.ar.md docs
       - name: Markdown privacy smoke check
         run: |
           ! grep -RInE -- '-----BEGIN|PrivateKey|PresharedKey' *.md docs diagrams .github || exit 1
+      - name: Git whitespace check
+        run: git diff --check
