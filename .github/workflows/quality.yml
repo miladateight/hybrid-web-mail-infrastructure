@@ -50,6 +50,6 @@ jobs:
         run: grep -R '```mermaid' README.md README.de.md README.fa.md README.ar.md docs
       - name: Markdown privacy smoke check
         run: |
-          ! grep -RInE -- '-----BEGIN|PrivateKey|PresharedKey' *.md docs diagrams .github || exit 1
+          ! grep -RInE -- '-----BEGIN|PrivateKey|PresharedKey' *.md docs diagrams || exit 1
       - name: Git whitespace check
         run: git diff --check
