@@ -47,7 +47,7 @@ jobs:
           python -m pip install --user yamllint
           yamllint .github/workflows
       - name: Mermaid diagram check
-        run: grep -R "```mermaid" README.md README.de.md README.fa.md README.ar.md docs
+        run: grep -R '```mermaid' README.md README.de.md README.fa.md README.ar.md docs
       - name: Markdown privacy smoke check
         run: |
           ! grep -RInE -- '-----BEGIN|PrivateKey|PresharedKey' *.md docs diagrams .github || exit 1
