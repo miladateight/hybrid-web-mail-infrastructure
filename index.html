@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hybrid Corporate Web and Mail Infrastructure | Milad</title>
     <meta name="description" content="An anonymous multilingual infrastructure engineering case study covering Linux hosting, mail services, secure remote access, MikroTik networking and hybrid connectivity.">
+    <link rel="canonical" href="https://miladateight.github.io/hybrid-web-mail-infrastructure/">
     <meta property="og:title" content="Hybrid Corporate Web and Mail Infrastructure | Milad">
     <meta property="og:description" content="An anonymous multilingual infrastructure engineering case study covering Linux hosting, mail services, secure remote access, MikroTik networking and hybrid connectivity.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://miladateight.github.io/hybrid-web-mail-infrastructure/">
+    <meta property="og:site_name" content="Hybrid Corporate Web and Mail Infrastructure">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hybrid Corporate Web and Mail Infrastructure | Milad">
+    <meta name="twitter:description" content="An anonymous multilingual infrastructure engineering case study covering Linux hosting, mail services, secure remote access, MikroTik networking and hybrid connectivity.">
     <meta name="theme-color" content="#101820">
     <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -31,12 +36,17 @@
           <a href="#overview" data-i18n="nav.overview">Overview</a>
           <a href="#challenge" data-i18n="nav.challenge">Challenge</a>
           <a href="#role" data-i18n="nav.role">My Role</a>
+          <a href="#implemented" data-i18n="nav.implemented">Implemented</a>
           <a href="#architecture" data-i18n="nav.architecture">Architecture</a>
+          <a href="#decisions" data-i18n="nav.decisions">Decisions</a>
           <a href="#web" data-i18n="nav.web">Web Platform</a>
           <a href="#mail" data-i18n="nav.mail">Mail Platform</a>
           <a href="#connectivity" data-i18n="nav.connectivity">Connectivity</a>
+          <a href="#routing" data-i18n="nav.routing">Routing</a>
           <a href="#security" data-i18n="nav.security">Security</a>
           <a href="#recovery" data-i18n="nav.recovery">Recovery</a>
+          <a href="#validation" data-i18n="nav.validation">Validation</a>
+          <a href="#outcomes" data-i18n="nav.outcomes">Outcomes</a>
           <a href="#stack" data-i18n="nav.stack">Technology Stack</a>
           <a href="#lessons" data-i18n="nav.lessons">Lessons Learned</a>
         </nav>
@@ -58,7 +68,7 @@
             <p class="hero-lead" data-i18n="hero.lead">An anonymous engineering case study covering website delivery, Linux hosting, enterprise mail services, secure remote access and hybrid network integration.</p>
             <div class="hero-actions">
               <a class="button primary" href="#architecture" data-i18n="hero.primaryAction">Explore Architecture</a>
-              <a class="button secondary" href="README.md" data-i18n="hero.secondaryAction">Open Repository README</a>
+              <a class="button secondary" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/README.md" target="_blank" rel="noopener noreferrer" data-i18n="hero.secondaryAction">Open Repository README</a>
             </div>
           </div>
           <div class="hero-visual" aria-label="Abstract infrastructure illustration" data-i18n-attr="aria-label:accessibility.heroVisual">
@@ -129,6 +139,34 @@
         </div>
       </section>
 
+      <section id="implemented" class="section muted section-observe">
+        <div class="container split-cards">
+          <div>
+            <p class="section-kicker" data-i18n="sections.implemented.kicker">Implemented Scope</p>
+            <h2 data-i18n="sections.implemented.title">Practical work delivered across the platform</h2>
+            <p data-i18n="sections.implemented.body">The public case study describes completed implementation and administration responsibilities, not a theoretical proposal. Exact production values are intentionally omitted.</p>
+          </div>
+          <div class="card-grid compact" data-cards="implemented.items">
+            <article class="info-card">
+              <h3>Website and hosting</h3>
+              <p>Designed, deployed and maintained the website layer on a Linux hosting stack.</p>
+            </article>
+            <article class="info-card">
+              <h3>Mail services</h3>
+              <p>Configured SMTP, IMAP and webmail services with TLS-aware access paths.</p>
+            </article>
+            <article class="info-card">
+              <h3>Network integration</h3>
+              <p>Integrated public entry, internal routing and encrypted transport concepts.</p>
+            </article>
+            <article class="info-card">
+              <h3>Operations</h3>
+              <p>Documented validation, recovery and privacy-safe portfolio review routines.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section id="architecture" class="section muted section-observe">
         <div class="container">
           <div class="section-heading">
@@ -149,6 +187,24 @@
               <span data-i18n="diagram.website">Website</span>
               <span data-i18n="diagram.email">Email</span>
               <span data-i18n="diagram.webmail">Webmail</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="decisions" class="section section-observe">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker" data-i18n="sections.decisions.kicker">Design Decisions</p>
+            <h2 data-i18n="sections.decisions.title">Why the platform was shaped this way</h2>
+          </div>
+          <div>
+            <p data-i18n="sections.decisions.body">The implementation favored maintainable operational boundaries: public access through controlled edges, mail authentication through DNS records, internal access through routed paths, and public documentation through sanitized abstractions.</p>
+            <div class="check-list" data-list="decisions.items">
+              <div>Use established services instead of custom mail or routing software.</div>
+              <div>Keep public web delivery, mail transport and internal access responsibilities distinct.</div>
+              <div>Document concepts without exposing hostnames, addresses, mailbox data or secrets.</div>
+              <div>Validate changes with repeatable checks before treating the system as healthy.</div>
             </div>
           </div>
         </div>
@@ -229,6 +285,23 @@
         </div>
       </section>
 
+      <section id="routing" class="section muted section-observe">
+        <div class="container split-cards">
+          <div>
+            <p class="section-kicker" data-i18n="sections.routing.kicker">Mail and Network Routing</p>
+            <h2 data-i18n="sections.routing.title">Controlled paths for users, domains and services</h2>
+            <p data-i18n="sections.routing.body">Routing was documented as a set of responsibilities rather than public configuration. The portfolio distinguishes internal access, external access, reverse proxy behavior, relay behavior and domain-specific outbound mail handling.</p>
+          </div>
+          <div class="flow-list" data-flow="routing.flow">
+            <div>Internal users reached services through routed internal paths.</div>
+            <div>External users reached selected services through a controlled public edge.</div>
+            <div>Reverse proxy behavior separated public entry from backend service placement.</div>
+            <div>Domain policy determined whether outbound SMTP used direct or relayed delivery.</div>
+            <div>DNS records supported mail trust while avoiding disclosure of production values.</div>
+          </div>
+        </div>
+      </section>
+
       <section id="security" class="section muted section-observe">
         <div class="container two-column">
           <div>
@@ -261,6 +334,52 @@
             <div>Root cause category: hosting control panel application dependencies became unavailable after a filesystem-related change.</div>
             <div>Recovery focused on restoring required application files, validating services and avoiding unrelated changes.</div>
             <div>Preventive actions emphasized backup verification, path validation and clearer recovery notes.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="validation" class="section muted section-observe">
+        <div class="container two-column">
+          <div>
+            <p class="section-kicker" data-i18n="sections.validation.kicker">Validation</p>
+            <h2 data-i18n="sections.validation.title">Checks used before publishing and after changes</h2>
+          </div>
+          <div>
+            <p data-i18n="sections.validation.body">The repository includes local and CI-friendly checks for locale consistency, JavaScript syntax, required files, internal links, HTML structure, CSS guardrails and privacy-sensitive content.</p>
+            <div class="check-list" data-list="validation.items">
+              <div>Locale files must share the same structure across English, German, Persian and Arabic.</div>
+              <div>Public links are checked so GitHub Pages does not ship broken local paths.</div>
+              <div>Privacy scanners reject production names, addresses, secrets and risky configuration patterns.</div>
+              <div>GitHub Pages deployment stages only the public site assets into the artifact.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="outcomes" class="section section-observe">
+        <div class="container split-cards">
+          <div>
+            <p class="section-kicker" data-i18n="sections.outcomes.kicker">Outcomes</p>
+            <h2 data-i18n="sections.outcomes.title">Operational results represented in the portfolio</h2>
+            <p data-i18n="sections.outcomes.body">The project outcome is presented as a privacy-safe professional record of implemented infrastructure work: web delivery, mail operations, network integration, security posture, documentation and recovery discipline.</p>
+          </div>
+          <div class="card-grid compact" data-cards="outcomes.items">
+            <article class="info-card">
+              <h3>Maintainable operations</h3>
+              <p>Responsibilities were documented in a way another operator could follow conceptually.</p>
+            </article>
+            <article class="info-card">
+              <h3>Secure public narrative</h3>
+              <p>The public repository tells the engineering story without exposing the real environment.</p>
+            </article>
+            <article class="info-card">
+              <h3>Multilingual presentation</h3>
+              <p>The project can be reviewed in English, German, Persian and Arabic.</p>
+            </article>
+            <article class="info-card">
+              <h3>Automated hygiene</h3>
+              <p>Validation scripts and workflows reduce accidental publishing mistakes.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -322,10 +441,10 @@
           <h2 data-i18n="sections.docs.title">Repository documentation</h2>
           <p data-i18n="sections.docs.body">Supporting Markdown files explain architecture, responsibilities, privacy scope, security posture, testing, recovery and maintenance without exposing production details.</p>
           <div class="doc-links">
-            <a href="docs/architecture.md">architecture.md</a>
-            <a href="docs/mail-platform.md">mail-platform.md</a>
-            <a href="docs/security.md">security.md</a>
-            <a href="PRIVACY_REVIEW.md">PRIVACY_REVIEW.md</a>
+            <a href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/architecture.md" target="_blank" rel="noopener noreferrer">architecture.md</a>
+            <a href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/mail-platform.md" target="_blank" rel="noopener noreferrer">mail-platform.md</a>
+            <a href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/security.md" target="_blank" rel="noopener noreferrer">security.md</a>
+            <a href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/PRIVACY_REVIEW.md" target="_blank" rel="noopener noreferrer">PRIVACY_REVIEW.md</a>
           </div>
         </div>
       </section>

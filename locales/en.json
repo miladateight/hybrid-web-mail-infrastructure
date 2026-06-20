@@ -18,12 +18,17 @@
     "overview": "Overview",
     "challenge": "Challenge",
     "role": "My Role",
+    "implemented": "Implemented",
     "architecture": "Architecture",
+    "decisions": "Decisions",
     "web": "Web Platform",
     "mail": "Mail Platform",
     "connectivity": "Connectivity",
+    "routing": "Routing",
     "security": "Security",
     "recovery": "Recovery",
+    "validation": "Validation",
+    "outcomes": "Outcomes",
     "stack": "Technology Stack",
     "lessons": "Lessons Learned"
   },
@@ -50,10 +55,20 @@
       "title": "Milad owned the integration work across web, Linux, mail and network layers",
       "body": "Milad designed and implemented the website presentation layer, deployed and administered the hosting environment, configured mail services, integrated secure connectivity, coordinated DNS authentication and maintained troubleshooting documentation. The work focused on installing, configuring, integrating, securing and operating established technologies."
     },
+    "implemented": {
+      "kicker": "Implemented Scope",
+      "title": "Practical work delivered across the platform",
+      "body": "The public case study describes completed implementation and administration responsibilities, not a theoretical proposal. Exact production values are intentionally omitted."
+    },
     "architecture": {
       "kicker": "Architecture",
       "title": "Generalized hybrid architecture",
       "body": "The public portfolio diagram intentionally removes provider names, addresses, hostnames, interface names and exact routing values. It shows only the engineering responsibilities and the relationship between major components."
+    },
+    "decisions": {
+      "kicker": "Design Decisions",
+      "title": "Why the platform was shaped this way",
+      "body": "The implementation favored maintainable operational boundaries: public access through controlled edges, mail authentication through DNS records, internal access through routed paths, and public documentation through sanitized abstractions."
     },
     "web": {
       "kicker": "Web Platform",
@@ -70,6 +85,11 @@
       "title": "Secure external entry and internal routed access",
       "body": "A European VPS provided a controlled external entry point. HAProxy and SMTP relay behavior were integrated with an encrypted WireGuard path toward the internal edge router, where firewall, NAT and policy-based routing decisions were maintained at a high level."
     },
+    "routing": {
+      "kicker": "Mail and Network Routing",
+      "title": "Controlled paths for users, domains and services",
+      "body": "Routing was documented as a set of responsibilities rather than public configuration. The portfolio distinguishes internal access, external access, reverse proxy behavior, relay behavior and domain-specific outbound mail handling."
+    },
     "security": {
       "kicker": "Security",
       "title": "Sanitized security approach",
@@ -79,6 +99,16 @@
       "kicker": "Recovery",
       "title": "Troubleshooting, incident recovery and validation",
       "body": "The recovery story is documented as a generalized operational process: symptoms, investigation, root cause category, restoration, validation and preventive documentation. It avoids real logs, command history, hostnames or incident identifiers."
+    },
+    "validation": {
+      "kicker": "Validation",
+      "title": "Checks used before publishing and after changes",
+      "body": "The repository includes local and CI-friendly checks for locale consistency, JavaScript syntax, required files, internal links, HTML structure, CSS guardrails and privacy-sensitive content."
+    },
+    "outcomes": {
+      "kicker": "Outcomes",
+      "title": "Operational results represented in the portfolio",
+      "body": "The project outcome is presented as a privacy-safe professional record of implemented infrastructure work: web delivery, mail operations, network integration, security posture, documentation and recovery discipline."
     },
     "stack": {
       "kicker": "Technology Stack",
@@ -142,6 +172,26 @@
       "Recovery documentation"
     ]
   },
+  "implemented": {
+    "items": [
+      {
+        "title": "Website and hosting",
+        "body": "Designed, deployed and maintained the website layer on a Linux hosting stack."
+      },
+      {
+        "title": "Mail services",
+        "body": "Configured SMTP, IMAP and webmail services with TLS-aware access paths."
+      },
+      {
+        "title": "Network integration",
+        "body": "Integrated public entry, internal routing and encrypted transport concepts."
+      },
+      {
+        "title": "Operations",
+        "body": "Documented validation, recovery and privacy-safe portfolio review routines."
+      }
+    ]
+  },
   "diagram": {
     "externalUsers": "External Users",
     "publicDns": "Public DNS",
@@ -154,6 +204,14 @@
     "website": "Website",
     "email": "Email",
     "webmail": "Webmail"
+  },
+  "decisions": {
+    "items": [
+      "Use established services instead of custom mail or routing software.",
+      "Keep public web delivery, mail transport and internal access responsibilities distinct.",
+      "Document concepts without exposing hostnames, addresses, mailbox data or secrets.",
+      "Validate changes with repeatable checks before treating the system as healthy."
+    ]
   },
   "web": {
     "items": [
@@ -204,6 +262,15 @@
       }
     ]
   },
+  "routing": {
+    "flow": [
+      "Internal users reached services through routed internal paths.",
+      "External users reached selected services through a controlled public edge.",
+      "Reverse proxy behavior separated public entry from backend service placement.",
+      "Domain policy determined whether outbound SMTP used direct or relayed delivery.",
+      "DNS records supported mail trust while avoiding disclosure of production values."
+    ]
+  },
   "security": {
     "items": [
       "No production identifiers are published in this repository.",
@@ -220,6 +287,34 @@
       "Root cause category: hosting control panel application dependencies became unavailable after a filesystem-related change.",
       "Recovery focused on restoring required application files, validating services and avoiding unrelated changes.",
       "Preventive actions emphasized backup verification, path validation and clearer recovery notes."
+    ]
+  },
+  "validation": {
+    "items": [
+      "Locale files must share the same structure across English, German, Persian and Arabic.",
+      "Public links are checked so GitHub Pages does not ship broken local paths.",
+      "Privacy scanners reject production names, addresses, secrets and risky configuration patterns.",
+      "GitHub Pages deployment stages only the public site assets into the artifact."
+    ]
+  },
+  "outcomes": {
+    "items": [
+      {
+        "title": "Maintainable operations",
+        "body": "Responsibilities were documented in a way another operator could follow conceptually."
+      },
+      {
+        "title": "Secure public narrative",
+        "body": "The public repository tells the engineering story without exposing the real environment."
+      },
+      {
+        "title": "Multilingual presentation",
+        "body": "The project can be reviewed in English, German, Persian and Arabic."
+      },
+      {
+        "title": "Automated hygiene",
+        "body": "Validation scripts and workflows reduce accidental publishing mistakes."
+      }
     ]
   },
   "stack": {

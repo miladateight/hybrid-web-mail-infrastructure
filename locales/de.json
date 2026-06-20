@@ -18,12 +18,17 @@
     "overview": "Überblick",
     "challenge": "Herausforderung",
     "role": "Meine Rolle",
+    "implemented": "Umgesetzt",
     "architecture": "Architektur",
+    "decisions": "Entscheidungen",
     "web": "Webplattform",
     "mail": "Mailplattform",
     "connectivity": "Konnektivität",
+    "routing": "Routing",
     "security": "Sicherheit",
     "recovery": "Wiederherstellung",
+    "validation": "Validierung",
+    "outcomes": "Ergebnisse",
     "stack": "Technologien",
     "lessons": "Erkenntnisse"
   },
@@ -50,10 +55,20 @@
       "title": "Milad verantwortete die Integration über Web-, Linux-, Mail- und Netzwerkschichten",
       "body": "Milad entwarf und implementierte die Website-Präsentationsschicht, stellte die Hosting-Umgebung bereit, administrierte sie, konfigurierte Maildienste, integrierte sichere Konnektivität, koordinierte DNS-Authentifizierung und pflegte Troubleshooting-Dokumentation. Der Schwerpunkt lag auf Installation, Konfiguration, Integration, Absicherung und Betrieb etablierter Technologien."
     },
+    "implemented": {
+      "kicker": "Umgesetzter Umfang",
+      "title": "Praktische Arbeit über die gesamte Plattform",
+      "body": "Die öffentliche Fallstudie beschreibt abgeschlossene Implementierungs- und Administrationsaufgaben, keinen theoretischen Vorschlag. Exakte Produktionswerte werden bewusst ausgelassen."
+    },
     "architecture": {
       "kicker": "Architektur",
       "title": "Generalisierte hybride Architektur",
       "body": "Das öffentliche Portfolio-Diagramm entfernt bewusst Provider, Adressen, Hostnamen, Schnittstellennamen und exakte Routingwerte. Es zeigt nur Verantwortlichkeiten und Beziehungen zwischen den Hauptkomponenten."
+    },
+    "decisions": {
+      "kicker": "Designentscheidungen",
+      "title": "Warum die Plattform so aufgebaut wurde",
+      "body": "Die Umsetzung priorisierte wartbare Betriebsgrenzen: öffentlicher Zugriff über kontrollierte Edges, Mailauthentifizierung über DNS-Records, interner Zugriff über geroutete Pfade und öffentliche Dokumentation über bereinigte Abstraktionen."
     },
     "web": {
       "kicker": "Webplattform",
@@ -70,6 +85,11 @@
       "title": "Sicherer externer Einstieg und intern gerouteter Zugriff",
       "body": "Ein European VPS stellte einen kontrollierten externen Einstiegspunkt bereit. HAProxy- und SMTP-Relay-Verhalten wurden mit einem verschlüsselten WireGuard-Pfad zum internen Edge Router verbunden, wo Firewall-, NAT- und Policy-Based-Routing-Entscheidungen auf hoher Ebene gepflegt wurden."
     },
+    "routing": {
+      "kicker": "Mail- und Netzwerkrouting",
+      "title": "Kontrollierte Pfade für Benutzer, Domänen und Dienste",
+      "body": "Routing wurde als Verantwortungsmodell dokumentiert, nicht als öffentliche Konfiguration. Das Portfolio unterscheidet internen Zugriff, externen Zugriff, Reverse-Proxy-Verhalten, Relay-Verhalten und domänenspezifische ausgehende Mailzustellung."
+    },
     "security": {
       "kicker": "Sicherheit",
       "title": "Bereinigter Sicherheitsansatz",
@@ -79,6 +99,16 @@
       "kicker": "Wiederherstellung",
       "title": "Troubleshooting, Incident Recovery und Validierung",
       "body": "Die Recovery-Story ist als allgemeiner Betriebsprozess dokumentiert: Symptome, Untersuchung, Ursachenkategorie, Wiederherstellung, Validierung und vorbeugende Dokumentation. Reale Logs, Befehlsverläufe, Hostnamen und Incident-Kennungen werden nicht verwendet."
+    },
+    "validation": {
+      "kicker": "Validierung",
+      "title": "Prüfungen vor Veröffentlichung und nach Änderungen",
+      "body": "Das Repository enthält lokale und CI-freundliche Prüfungen für Locale-Konsistenz, JavaScript-Syntax, erforderliche Dateien, interne Links, HTML-Struktur, CSS-Leitplanken und datenschutzrelevante Inhalte."
+    },
+    "outcomes": {
+      "kicker": "Ergebnisse",
+      "title": "Betriebliche Ergebnisse im Portfolio",
+      "body": "Das Projektergebnis wird als datenschutzsicherer professioneller Nachweis umgesetzter Infrastrukturarbeit dargestellt: Webauslieferung, Mailbetrieb, Netzwerkintegration, Sicherheitslage, Dokumentation und Recovery-Disziplin."
     },
     "stack": {
       "kicker": "Technologien",
@@ -142,6 +172,26 @@
       "Recovery-Dokumentation"
     ]
   },
+  "implemented": {
+    "items": [
+      {
+        "title": "Website und Hosting",
+        "body": "Die Website-Schicht wurde auf einem Linux-Hosting-Stack entworfen, bereitgestellt und gepflegt."
+      },
+      {
+        "title": "Maildienste",
+        "body": "SMTP-, IMAP- und Webmail-Dienste wurden mit TLS-bewussten Zugriffspfaden konfiguriert."
+      },
+      {
+        "title": "Netzwerkintegration",
+        "body": "Öffentlicher Einstieg, internes Routing und verschlüsselte Transportkonzepte wurden integriert."
+      },
+      {
+        "title": "Betrieb",
+        "body": "Validierung, Recovery und datenschutzsichere Portfolio-Prüfung wurden dokumentiert."
+      }
+    ]
+  },
   "diagram": {
     "externalUsers": "Externe Benutzer",
     "publicDns": "Public DNS",
@@ -154,6 +204,14 @@
     "website": "Website",
     "email": "E-Mail",
     "webmail": "Webmail"
+  },
+  "decisions": {
+    "items": [
+      "Etablierte Dienste statt eigener Mail- oder Routingsoftware verwenden.",
+      "Öffentliche Webauslieferung, Mailtransport und interne Zugriffsverantwortung klar trennen.",
+      "Konzepte dokumentieren, ohne Hostnamen, Adressen, Postfachdaten oder Secrets offenzulegen.",
+      "Änderungen mit wiederholbaren Prüfungen validieren, bevor das System als gesund gilt."
+    ]
   },
   "web": {
     "items": [
@@ -204,6 +262,15 @@
       }
     ]
   },
+  "routing": {
+    "flow": [
+      "Interne Benutzer erreichten Dienste über geroutete interne Pfade.",
+      "Externe Benutzer erreichten ausgewählte Dienste über einen kontrollierten öffentlichen Edge.",
+      "Reverse-Proxy-Verhalten trennte öffentlichen Einstieg von der Platzierung der Backend-Dienste.",
+      "Die Domänenrichtlinie bestimmte, ob ausgehende SMTP-Zustellung direkt oder über Relay erfolgte.",
+      "DNS-Records unterstützten Mailvertrauen, ohne Produktionswerte offenzulegen."
+    ]
+  },
   "security": {
     "items": [
       "In diesem Repository werden keine Produktionskennungen veröffentlicht.",
@@ -220,6 +287,34 @@
       "Ursachenkategorie: Abhängigkeiten der Hosting-Control-Panel-Anwendung wurden nach einer dateisystembezogenen Änderung nicht mehr verfügbar.",
       "Die Wiederherstellung konzentrierte sich auf erforderliche Anwendungsdateien, Servicevalidierung und das Vermeiden nicht zusammenhängender Änderungen.",
       "Vorbeugende Maßnahmen betonten Restore-Tests, Pfadvalidierung und klarere Recovery-Notizen."
+    ]
+  },
+  "validation": {
+    "items": [
+      "Locale-Dateien müssen in Englisch, Deutsch, Persisch und Arabisch dieselbe Struktur haben.",
+      "Öffentliche Links werden geprüft, damit GitHub Pages keine defekten lokalen Pfade ausliefert.",
+      "Privacy-Scanner lehnen Produktionsnamen, Adressen, Secrets und riskante Konfigurationsmuster ab.",
+      "Das GitHub-Pages-Deployment legt nur die öffentlichen Site-Assets im Artifact ab."
+    ]
+  },
+  "outcomes": {
+    "items": [
+      {
+        "title": "Wartbarer Betrieb",
+        "body": "Verantwortlichkeiten wurden so dokumentiert, dass ein anderer Operator sie konzeptionell nachvollziehen kann."
+      },
+      {
+        "title": "Sichere öffentliche Erzählung",
+        "body": "Das öffentliche Repository erzählt die Engineering-Geschichte, ohne die reale Umgebung offenzulegen."
+      },
+      {
+        "title": "Mehrsprachige Darstellung",
+        "body": "Das Projekt kann auf Englisch, Deutsch, Persisch und Arabisch geprüft werden."
+      },
+      {
+        "title": "Automatisierte Hygiene",
+        "body": "Validierungsskripte und Workflows reduzieren versehentliche Veröffentlichungsfehler."
+      }
     ]
   },
   "stack": {

@@ -120,9 +120,13 @@
     const description = qs("meta[name='description']");
     const ogTitle = qs("meta[property='og:title']");
     const ogDescription = qs("meta[property='og:description']");
+    const twitterTitle = qs("meta[name='twitter:title']");
+    const twitterDescription = qs("meta[name='twitter:description']");
     if (description) description.setAttribute("content", state.locale.meta.description);
     if (ogTitle) ogTitle.setAttribute("content", state.locale.meta.title);
     if (ogDescription) ogDescription.setAttribute("content", state.locale.meta.description);
+    if (twitterTitle) twitterTitle.setAttribute("content", state.locale.meta.title);
+    if (twitterDescription) twitterDescription.setAttribute("content", state.locale.meta.description);
   }
 
   function updateLanguageButtons() {
