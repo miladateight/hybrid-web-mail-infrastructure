@@ -139,18 +139,6 @@ End-to-end infrastructure ownership, Linux administration, web hosting, mail adm
 - [Testing Strategy](docs/testing-strategy.md)
 - [Incident Recovery](docs/incident-recovery.md)
 
-## Run Locally
-
-```bash
-python3 -m http.server 8080
-```
-
-Then open `http://localhost:8080`. Direct `file://` access may block locale JSON loading.
-
-## Live Portfolio
-
-[Open the GitHub Pages portfolio](https://miladateight.github.io/hybrid-web-mail-infrastructure/)
-
 ## Privacy and Confidentiality
 
 This repository excludes the real company identity, website source, domains, hostnames, addresses, credentials, keys, production configuration, screenshots, logs, mailbox data and backups. It is an engineering narrative, not an operational blueprint.

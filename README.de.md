@@ -108,16 +108,6 @@ Linux, Ubuntu Server, HestiaCP, Nginx, Exim, Dovecot, Roundcube, HAProxy, WireGu
 - [Teststrategie](docs/testing-strategy.md)
 - [Störungsbehebung](docs/incident-recovery.md)
 
-## Lokal ausführen
-
-```bash
-python3 -m http.server 8080
-```
-
-## Live-Portfolio
-
-[GitHub-Pages-Portfolio öffnen](https://miladateight.github.io/hybrid-web-mail-infrastructure/)
-
 ## Datenschutz
 
 Dieses Repository ist eine bereinigte technische Fallstudie und kein Produktionsbackup oder Deployment-Handbuch.
