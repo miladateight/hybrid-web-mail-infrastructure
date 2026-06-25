@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#05070f" />
+    <meta name="description" content="Hybrid Corporate Web and Mail Infrastructure case study by Milad Ateight." />
+    <link rel="icon" type="image/png" href="./at8-logo.png" />
+    <link rel="apple-touch-icon" href="./at8-logo.png" />
+    <title>Hybrid Web & Mail Infrastructure | AT8</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #05070f;
+        --bg2: #08121c;
+        --panel: rgba(9, 18, 30, 0.78);
+        --panel2: rgba(12, 25, 40, 0.92);
+        --line: rgba(148, 221, 255, 0.18);
+        --line2: rgba(56, 189, 248, 0.42);
+        --text: #f8fafc;
+        --soft: rgba(226, 232, 240, 0.86);
+        --muted: rgba(203, 213, 225, 0.66);
+        --cyan: #38bdf8;
+        --green: #34d399;
+        --gold: #f5c400;
+        --red: #ef4444;
+        --shadow: 0 28px 88px rgba(0, 0, 0, 0.38);
+        --brand-gold: #f5c400;
+        --brand-red: #ef1111;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-width: 320px;
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 12% 8%, rgba(52, 211, 153, 0.15), transparent 30%),
+          radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.14), transparent 31%),
+          radial-gradient(circle at 72% 78%, rgba(245, 196, 0, 0.08), transparent 30%),
+          linear-gradient(140deg, #05070f 0%, #08121c 46%, #05070f 100%);
+      }
+      a { color: inherit; text-decoration: none; }
+      button { border: 0; font: inherit; }
+      h1, h2, h3, p { margin-top: 0; }
+      .page { position: relative; isolation: isolate; }
+      .grid-field {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, rgba(148, 221, 255, 0.052) 1px, transparent 1px),
+          linear-gradient(rgba(148, 221, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(180deg, transparent 0, rgba(5, 7, 15, 0.96) 88%);
+        background-size: 78px 78px, 78px 78px, auto;
+        animation: gridDrift 24s ease-in-out infinite alternate;
+      }
+
+      .topbar {
+        position: fixed;
+        top: 16px;
+        left: clamp(14px, 3vw, 34px);
+        right: clamp(14px, 3vw, 34px);
+        z-index: 30;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 18px;
+        padding: 10px 12px;
+        border: 1px solid rgba(125, 211, 252, 0.2);
+        border-radius: 999px;
+        background: rgba(2, 8, 18, 0.76);
+        box-shadow: 0 22px 72px rgba(0, 0, 0, 0.34), 0 0 46px rgba(56, 189, 248, 0.08);
+        backdrop-filter: blur(20px);
+        direction: ltr;
+      }
+      .brand, .nav, .lang-switch, .actions, .eyebrow, .signals, .metric, .flow-row, .doc-link { display: flex; align-items: center; }
+      .brand { gap: 10px; font-weight: 800; justify-self: start; min-width: 0; }
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        aspect-ratio: 1;
+        padding: 4px;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 40% 28%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.74) 58%, rgba(245, 196, 0, 0.2)),
+          rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 34px rgba(245, 196, 0, 0.22), 0 0 44px rgba(239, 17, 17, 0.08);
+        overflow: hidden;
+      }
+      .brand-mark img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.24)); }
+      .brand-text { display: grid; gap: 0; line-height: 1.08; }
+      .brand-text strong { font-size: 1rem; }
+      .brand-text small { color: var(--brand-gold); font-family: "Cascadia Code", Consolas, monospace; font-size: 0.72rem; font-weight: 800; }
+      .header-tools { display: contents; }
+      .nav { gap: 8px; justify-content: center; }
+      .nav a {
+        min-height: 38px;
+        padding: 0 13px;
+        border-radius: 999px;
+        color: var(--soft);
+        transition: background 180ms ease, color 180ms ease;
+      }
+      .nav a:hover { color: white; background: rgba(34, 211, 238, 0.12); }
+      .lang-switch { gap: 4px; min-width: 0; padding: 4px; border: 1px solid rgba(125, 211, 252, 0.16); border-radius: 999px; background: rgba(15, 23, 42, 0.74); direction: ltr; }
+      .lang-switch button { min-height: 34px; padding: 0 10px; border: 0; border-radius: 999px; color: var(--soft); background: transparent; cursor: pointer; text-align: center; }
+      .lang-switch button.active, .lang-switch button:hover { color: white; background: rgba(56, 189, 248, 0.12); }
+      .lang-switch button.active { box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.34); }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(440px, 0.88fr);
+        align-items: center;
+        gap: clamp(34px, 5vw, 82px);
+        min-height: 100svh;
+        padding: 138px clamp(20px, 5vw, 82px) 72px;
+        overflow-x: clip;
+      }
+      .eyebrow {
+        gap: 9px;
+        margin-bottom: 18px;
+        color: var(--green);
+        font-family: "Cascadia Code", Consolas, monospace;
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+      .eyebrow::before { width: 10px; height: 10px; border-radius: 50%; background: var(--green); box-shadow: 0 0 20px rgba(52,211,153,0.7); content: ""; }
+      h1 { max-width: 900px; margin-bottom: 24px; font-size: clamp(2.45rem, 6vw, 6.35rem); line-height: 0.96; letter-spacing: 0; overflow-wrap: break-word; }
+      .hero-lead { max-width: 810px; color: var(--soft); font-size: clamp(1.05rem, 1.35vw, 1.24rem); line-height: 1.82; }
+      .actions { flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        min-height: 50px;
+        padding: 0 18px;
+        border: 1px solid rgba(148,221,255,0.22);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(15,23,42,0.66);
+        overflow: hidden;
+        transition: transform 180ms ease, border-color 180ms ease;
+      }
+      .button:hover, .doc-link:hover { transform: translateY(-2px); border-color: var(--line2); }
+      .button.primary { border-color: rgba(52,211,153,0.44); color: #03110d; background: linear-gradient(135deg, #ecfeff, var(--green) 56%, var(--cyan)); box-shadow: 0 24px 72px rgba(52,211,153,0.18); font-weight: 900; }
+      .signals { flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+      .signals span { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border: 1px solid rgba(245,196,0,0.22); border-radius: 999px; color: rgba(255,247,204,0.94); background: rgba(245,196,0,0.07); font-size: 0.9rem; }
+
+      .hero-stage { position: relative; min-height: clamp(560px, 60vw, 740px); perspective: 1300px; }
+      .mail-stage {
+        position: absolute;
+        inset: 8% 2% 5%;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(148,221,255,0.16);
+        border-radius: 8px;
+        background:
+          radial-gradient(circle at 50% 44%, rgba(52,211,153,0.15), transparent 33%),
+          linear-gradient(90deg, rgba(148,221,255,0.045) 1px, transparent 1px),
+          linear-gradient(rgba(148,221,255,0.035) 1px, transparent 1px),
+          rgba(4,10,18,0.76);
+        background-size: auto, 56px 56px, 56px 56px, auto;
+        box-shadow: var(--shadow), inset 0 0 72px rgba(56,189,248,0.055);
+        overflow: hidden;
+      }
+      .mail-orbit { position: absolute; inset: 12%; border: 1px solid rgba(52,211,153,0.22); border-radius: 50%; animation: orbitSpin 18s linear infinite; }
+      .mail-orbit:nth-child(2) { inset: 23%; border-color: rgba(245,196,0,0.24); animation-duration: 13s; animation-direction: reverse; }
+      .mail-lane { position: absolute; left: 8%; right: 8%; height: 1px; background: linear-gradient(90deg, transparent, rgba(56,189,248,0.45), transparent); }
+      .lane-one { top: 35%; } .lane-two { top: 50%; } .lane-three { top: 65%; }
+      .mail-core {
+        position: relative;
+        z-index: 4;
+        display: grid;
+        gap: 16px;
+        width: min(440px, 82%);
+        min-height: 344px;
+        padding: 24px;
+        border: 1px solid rgba(148,221,255,0.26);
+        border-radius: 8px;
+        background: linear-gradient(145deg, rgba(56,189,248,0.16), rgba(255,255,255,0.035) 44%, rgba(52,211,153,0.1)), var(--panel2);
+        box-shadow: 0 34px 100px rgba(0,0,0,0.38), inset 0 0 0 1px rgba(255,255,255,0.045);
+        animation: mailCoreFloat 7.5s ease-in-out infinite;
+      }
+      .mail-core-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; color: var(--muted); font-family: "Cascadia Code", Consolas, monospace; font-size: 0.78rem; }
+      .mail-icon { display: grid; place-items: center; min-height: 150px; border: 1px solid rgba(52,211,153,0.18); border-radius: 8px; background: linear-gradient(180deg, rgba(15,23,42,0.7), rgba(5,12,21,0.88)), rgba(15,23,42,0.62); overflow: hidden; }
+      .mail-envelope { position: relative; width: min(210px, 64%); aspect-ratio: 1.55; border: 3px solid rgba(236,254,255,0.92); border-radius: 10px; background: linear-gradient(145deg, rgba(236,254,255,0.14), rgba(52,211,153,0.18)); box-shadow: 0 0 42px rgba(52,211,153,0.16); }
+      .mail-envelope::before, .mail-envelope::after { position: absolute; inset: 0; border-top: 3px solid rgba(236,254,255,0.9); content: ""; }
+      .mail-envelope::before { transform: skewY(28deg); transform-origin: left top; }
+      .mail-envelope::after { transform: skewY(-28deg); transform-origin: right top; }
+      .mail-slot { display: grid; gap: 7px; padding: 13px; border: 1px solid rgba(148,221,255,0.14); border-radius: 8px; background: rgba(2,6,23,0.42); }
+      .mail-slot strong { color: #dcfce7; }
+      .mail-slot span { color: var(--muted); font-family: "Cascadia Code", Consolas, monospace; font-size: 0.8rem; line-height: 1.35; overflow-wrap: anywhere; }
+      .mail-chip { position: absolute; z-index: 6; display: inline-flex; align-items: center; min-height: 40px; padding: 0 12px; border: 1px solid rgba(148,221,255,0.2); border-radius: 999px; color: var(--soft); background: rgba(8,16,28,0.84); box-shadow: 0 18px 52px rgba(0,0,0,0.26); backdrop-filter: blur(16px); font-size: 0.86rem; animation: mailChipFloat 6s ease-in-out infinite; }
+      .mail-chip-in { top: 18%; left: 2%; }
+      .mail-chip-out { right: 3%; bottom: 7%; animation-delay: -2.4s; }
+      .mail-chip-auth { right: 8%; top: 18%; color: #fff7cc; border-color: rgba(245,196,0,0.26); animation-delay: -4s; }
+      .mail-message { position: absolute; z-index: 8; width: 46px; height: 30px; border: 1px solid rgba(255,255,255,0.42); border-radius: 7px; background: linear-gradient(145deg, #fff7cc, var(--gold)); box-shadow: 0 0 32px rgba(245,196,0,0.42); animation: incomingMail 5.8s linear infinite; }
+      .mail-message::before, .mail-message::after { position: absolute; inset: 7px 7px auto; height: 13px; border-top: 2px solid rgba(4,16,24,0.56); content: ""; }
+      .mail-message::before { transform: skewY(28deg); }
+      .mail-message::after { transform: skewY(-28deg); }
+      .mail-message-two { background: linear-gradient(145deg, #ecfeff, var(--cyan)); box-shadow: 0 0 32px rgba(56,189,248,0.38); animation-name: outgoingMail; animation-delay: -1.8s; }
+      .mail-message-three { background: linear-gradient(145deg, #dcfce7, var(--green)); box-shadow: 0 0 32px rgba(52,211,153,0.38); animation-delay: -3.6s; }
+
+      .section { position: relative; z-index: 1; padding: 84px clamp(20px, 5vw, 82px); background: linear-gradient(180deg, rgba(5,7,15,0.96), rgba(5,7,15,0.99)), radial-gradient(circle at 16% 10%, rgba(56,189,248,0.065), transparent 26%); }
+      .section-heading { max-width: 940px; margin-bottom: 32px; }
+      h2 { margin-bottom: 14px; font-size: clamp(2.15rem, 4.8vw, 5.1rem); line-height: 1; letter-spacing: 0; }
+      .section-heading p, .story-panel p, .flow-card p, .boundary-card p, .recovery-card p { color: var(--soft); font-size: 1.04rem; line-height: 1.82; }
+      .story-grid, .scope-grid, .path-grid, .boundary-grid, .docs-grid { display: grid; gap: 14px; }
+      .story-grid { grid-template-columns: minmax(0, 0.84fr) minmax(300px, 0.38fr); }
+      .scope-grid, .boundary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .path-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .docs-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .story-panel, .scope-card, .flow-card, .boundary-card, .recovery-card, .doc-link { border: 1px solid rgba(148,221,255,0.18); border-radius: 8px; background: linear-gradient(145deg, rgba(56,189,248,0.1), rgba(255,255,255,0.025) 45%, rgba(52,211,153,0.075)), var(--panel); box-shadow: 0 24px 76px rgba(0,0,0,0.24); }
+      .story-panel, .scope-card, .flow-card, .boundary-card, .recovery-card { padding: 24px; }
+      .scope-card, .flow-card, .boundary-card, .recovery-card { min-height: 230px; }
+      .story-panel strong, .scope-card span, .flow-card span, .boundary-card span, .recovery-card span { color: var(--gold); font-family: "Cascadia Code", Consolas, monospace; font-size: 0.8rem; font-weight: 900; }
+      .story-panel h3, .scope-card h3, .flow-card h3, .boundary-card h3, .recovery-card h3 { margin: 14px 0 12px; font-size: 1.38rem; line-height: 1.18; }
+      .metric-list { display: grid; gap: 10px; }
+      .metric { justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid rgba(148,221,255,0.14); border-radius: 8px; background: rgba(15,23,42,0.46); }
+      .metric small { color: var(--muted); text-align: right; }
+
+      .architecture-stage { display: grid; gap: 14px; margin-top: 18px; }
+      .system-map { position: relative; min-height: 700px; border: 1px solid rgba(148,221,255,0.16); border-radius: 8px; background: radial-gradient(circle at 52% 48%, rgba(52,211,153,0.13), transparent 34%), linear-gradient(90deg, rgba(148,221,255,0.042) 1px, transparent 1px), linear-gradient(rgba(148,221,255,0.035) 1px, transparent 1px), rgba(4,10,18,0.74); background-size: auto, 54px 54px, 54px 54px, auto; box-shadow: var(--shadow), inset 0 0 64px rgba(56,189,248,0.055); overflow: hidden; }
+      .map-floor { position: absolute; inset: 11%; border: 1px solid rgba(52,211,153,0.18); border-radius: 50%; }
+      .route-lines { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke-linecap: round; }
+      .route-lines path { stroke: rgba(56,189,248,0.42); stroke-width: 2.4; stroke-dasharray: 8 16; animation: dashFlow 9s linear infinite; }
+      .route-lines path:nth-child(2n) { stroke: rgba(52,211,153,0.44); animation-duration: 7s; }
+      .route-lines path:nth-child(3n) { stroke: rgba(245,196,0,0.42); animation-duration: 11s; }
+      .node { position: absolute; z-index: 5; display: grid; gap: 7px; width: 156px; min-height: 78px; padding: 12px; border: 1px solid rgba(148,221,255,0.24); border-radius: 8px; background: linear-gradient(145deg, rgba(56,189,248,0.14), rgba(255,255,255,0.035) 42%, rgba(52,211,153,0.1)), rgba(6,17,28,0.94); box-shadow: 0 24px 62px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.045); transform: translate(-50%, -50%); animation: nodeFloat 7.4s ease-in-out infinite; }
+      .node::before { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; color: #041018; background: linear-gradient(145deg, #ecfeff, var(--green) 60%, var(--cyan)); font-weight: 900; content: attr(data-code); }
+      .node strong { font-size: 0.86rem; line-height: 1.16; }
+      .node small { color: var(--muted); font-family: "Cascadia Code", Consolas, monospace; font-size: 0.68rem; line-height: 1.3; }
+      .node-public { left: 18%; top: 12%; } .node-dns { left: 45%; top: 9%; animation-delay: -1s; } .node-vps { left: 32%; top: 26%; animation-delay: -1.8s; } .node-haproxy { left: 38%; top: 42%; animation-delay: -2.6s; } .node-tunnel { left: 52%; top: 56%; animation-delay: -3.2s; } .node-router { left: 67%; top: 50%; animation-delay: -4s; } .node-proxy { left: 76%; top: 66%; animation-delay: -4.6s; } .node-server { left: 57%; top: 76%; width: 190px; border-color: rgba(245,196,0,0.3); animation-delay: -5.2s; } .node-internal { left: 82%; top: 31%; animation-delay: -6s; }
+      .service { position: absolute; z-index: 4; display: inline-flex; align-items: center; justify-content: center; min-width: 112px; min-height: 38px; padding: 0 10px; border: 1px solid rgba(245,196,0,0.24); border-radius: 999px; color: rgba(255,247,204,0.95); background: rgba(11,22,35,0.9); box-shadow: 0 16px 42px rgba(0,0,0,0.26); font-size: 0.72rem; font-weight: 800; transform: translate(-50%, -50%); animation: servicePulse 6s ease-in-out infinite; }
+      .service-web { left: 19%; top: 85%; } .service-smtp { left: 35%; top: 90%; animation-delay: -1.2s; } .service-imap { left: 51%; top: 92%; animation-delay: -2.4s; } .service-webmail { left: 68%; top: 89%; animation-delay: -3.6s; } .service-backup { left: 85%; top: 82%; animation-delay: -4.8s; }
+      .packet { position: absolute; z-index: 9; display: grid; place-items: center; width: 42px; height: 28px; border: 1px solid rgba(255,255,255,0.42); border-radius: 6px; background: linear-gradient(145deg, #fff7cc, var(--gold)); box-shadow: 0 0 30px rgba(245,196,0,0.42); animation: mailPacket 8.5s linear infinite; }
+      .packet::before, .packet::after { position: absolute; inset: 7px 6px auto; height: 12px; border-top: 2px solid rgba(4,16,24,0.6); content: ""; } .packet::before { transform: skewY(28deg); } .packet::after { transform: skewY(-28deg); }
+      .packet-two { background: linear-gradient(145deg, #ecfeff, var(--cyan)); box-shadow: 0 0 30px rgba(56,189,248,0.4); animation-name: webPacket; animation-delay: -2.2s; }
+      .packet-three { background: linear-gradient(145deg, #dcfce7, var(--green)); box-shadow: 0 0 30px rgba(52,211,153,0.38); animation-delay: -4.4s; }
+      .stage-caption { display: grid; gap: 6px; width: min(700px, 100%); padding: 16px; border: 1px solid rgba(148,221,255,0.18); border-radius: 8px; background: rgba(5,12,21,0.82); box-shadow: 0 20px 58px rgba(0,0,0,0.3); backdrop-filter: blur(16px); }
+      .stage-caption strong { color: #dcfce7; } .stage-caption small { color: var(--muted); line-height: 1.55; }
+      .flow-row { gap: 14px; margin: 18px 0; padding: 15px; border: 1px solid rgba(245,196,0,0.18); border-radius: 8px; background: rgba(245,196,0,0.055); color: rgba(255,247,204,0.96); font-family: "Cascadia Code", Consolas, monospace; line-height: 1.55; }
+      .recovery-layout { display: grid; grid-template-columns: minmax(0,0.54fr) minmax(0,0.46fr); gap: 14px; }
+      .doc-link { justify-content: space-between; gap: 14px; min-height: 82px; padding: 16px; transition: transform 180ms ease, border-color 180ms ease; }
+      .doc-link span { color: var(--soft); font-weight: 850; } .doc-link small { color: var(--muted); font-family: "Cascadia Code", Consolas, monospace; }
+      .footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding: 24px clamp(20px,5vw,82px) 42px; border-top: 1px solid rgba(148,221,255,0.14); color: var(--muted); background: rgba(5,7,15,0.99); }
+      .footer-projects { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+      .footer-projects a:hover { color: var(--text); }
+      .rtl .hero-copy, .rtl .section-heading, .rtl .story-panel, .rtl .scope-card, .rtl .flow-card, .rtl .boundary-card, .rtl .recovery-card { direction: rtl; text-align: right; } .rtl .actions, .rtl .signals { justify-content: flex-start; } .rtl .metric small { text-align: left; }
+
+      @keyframes gridDrift { from { background-position: 0 0, 0 0, center; } to { background-position: 34px 22px, -30px 24px, center; } }
+      @keyframes orbitSpin { from { rotate: 0deg; } to { rotate: 360deg; } }
+      @keyframes mailCoreFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+      @keyframes mailChipFloat { 0%,100% { transform: translateY(0); opacity: 0.84; } 50% { transform: translateY(-8px); opacity: 1; } }
+      @keyframes incomingMail { 0% { left: -8%; top: 30%; opacity: 0; transform: translate(0,0) scale(0.85); } 14% { opacity: 1; } 50% { left: 50%; top: 42%; transform: translate(-50%,-50%) scale(1); } 74% { opacity: 1; } 100% { left: 108%; top: 62%; opacity: 0; transform: translate(-100%,-50%) scale(0.9); } }
+      @keyframes outgoingMail { 0% { right: -8%; top: 62%; opacity: 0; transform: translate(0,0) scale(0.85); } 14% { opacity: 1; } 48% { right: 50%; top: 46%; transform: translate(50%,-50%) scale(1); } 74% { opacity: 1; } 100% { right: 108%; top: 28%; opacity: 0; transform: translate(100%,-50%) scale(0.9); } }
+      @keyframes nodeFloat { 0%,100% { transform: translate(-50%,-50%); } 50% { transform: translate(-50%,-58%); } }
+      @keyframes servicePulse { 0%,100% { opacity: 0.82; transform: translate(-50%,-50%); } 50% { opacity: 1; transform: translate(-50%,-62%); } }
+      @keyframes dashFlow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -220; } }
+      @keyframes mailPacket { 0% { left: 18%; top: 12%; transform: translate(-50%,-50%) rotateZ(0deg); } 17% { left: 32%; top: 26%; transform: translate(-50%,-50%) rotateZ(10deg); } 34% { left: 38%; top: 42%; transform: translate(-50%,-50%) rotateZ(-8deg); } 51% { left: 52%; top: 56%; transform: translate(-50%,-50%) rotateZ(13deg); } 68% { left: 67%; top: 50%; transform: translate(-50%,-50%) rotateZ(-10deg); } 84% { left: 57%; top: 76%; transform: translate(-50%,-50%) rotateZ(6deg); } 100% { left: 35%; top: 90%; transform: translate(-50%,-50%) rotateZ(0deg); } }
+      @keyframes webPacket { 0% { left: 45%; top: 9%; transform: translate(-50%,-50%); } 22% { left: 32%; top: 26%; transform: translate(-50%,-50%); } 44% { left: 52%; top: 56%; transform: translate(-50%,-50%); } 66% { left: 76%; top: 66%; transform: translate(-50%,-50%); } 100% { left: 19%; top: 85%; transform: translate(-50%,-50%); } }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+      @media (max-width: 1180px) { .hero, .story-grid, .recovery-layout { grid-template-columns: 1fr; } .hero-stage { min-height: 660px; } .scope-grid, .docs-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+      @media (max-width: 820px) {
+        .lang-switch { display: flex; flex-wrap: wrap; justify-self: start; direction: ltr; overflow: hidden; width: calc(100% - 28px); }
+        .lang-switch button { flex: 1 1 calc(50% - 4px); max-width: calc(50% - 2px); min-width: 0; padding-inline: 4px; overflow: hidden; font-size: 0.72rem; text-overflow: ellipsis; white-space: nowrap; }
+      }
+      @media (max-width: 820px) { .topbar { position: absolute; grid-template-columns: 1fr; align-items: stretch; border-radius: 18px; } .nav { display: none; } .hero { grid-template-columns: 1fr; padding-top: 214px; padding-inline: 24px; } .hero-copy, .hero-stage, .actions, .signals, .hero-lead { width: min(342px, calc(100vw - 48px)); max-width: min(342px, calc(100vw - 48px)); min-width: 0; } h1 { width: min(342px, calc(100vw - 48px)); max-width: min(342px, calc(100vw - 48px)); font-size: clamp(1.9rem, 9.2vw, 2.5rem); line-height: 1.06; } .hero-stage { display: grid; min-height: auto; } .mail-stage { position: relative; inset: auto; min-height: 520px; } .mail-core { width: min(312px, calc(100vw - 76px)); min-height: 318px; padding: 18px; } .mail-chip { display: none; } .system-map { min-height: auto; display: grid; gap: 10px; padding: 14px; overflow: visible; } .route-lines, .map-floor, .packet { display: none; } .node, .service { position: static; width: auto; min-width: 0; transform: none; animation: none; } .path-grid, .scope-grid, .boundary-grid, .docs-grid { grid-template-columns: 1fr; } .actions .button { width: 100%; max-width: min(342px, calc(100vw - 48px)); } .footer { flex-direction: column; } }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="grid-field"></div>
+      <header class="topbar">
+        <a class="brand" href="https://ateight.xyz/">
+          <span class="brand-mark"><img src="./at8-logo.png" alt="" aria-hidden="true" /></span>
+          <span class="brand-text"><strong>Milad</strong><small>AT8</small></span>
+        </a>
+        <div class="header-tools">
+          <nav class="nav" aria-label="Page navigation">
+            <a href="https://ateight.xyz/" data-i18n="navHome">Home</a>
+            <a href="https://ateight.xyz/#about" data-i18n="navAbout">About Me</a>
+            <a href="https://ateight.xyz/#projects" data-i18n="navProjects">Projects</a>
+            <a href="https://ateight.xyz/#contact" data-i18n="navContact">Contact Me</a>
+          </nav>
+          <div class="lang-switch" aria-label="Language switcher">
+            <button type="button" class="active" data-lang="en" data-full="English" data-short="EN">English</button>
+            <button type="button" data-lang="fa" data-full="فارسی" data-short="FA">فارسی</button>
+            <button type="button" data-lang="ar" data-full="العربية" data-short="AR">العربية</button>
+            <button type="button" data-lang="de" data-full="Deutsch" data-short="DE">Deutsch</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="heroKicker">Sanitized production case study</p>
+          <h1 data-i18n="heroTitle">Hybrid Corporate Web and Mail Infrastructure</h1>
+          <p class="hero-lead" data-i18n="heroLead">A real web and mail platform engineered as one coordinated system: Linux hosting, HestiaCP, Nginx, Exim, Dovecot, Roundcube, HAProxy, WireGuard, MikroTik routing, DNS authentication, backups, validation, and incident recovery.</p>
+          <div class="actions"><a class="button primary" href="https://github.com/miladateight/hybrid-web-mail-infrastructure" data-i18n="actionGithub">Open GitHub repository</a><a class="button" href="#architecture" data-i18n="actionArchitecture">View architecture</a><a class="button" href="https://ateight.xyz/" data-i18n="actionHome">AT8 home</a></div>
+          <div class="signals"><span data-i18n="signalHosting">Web and mail hosting</span><span data-i18n="signalEdge">Encrypted edge transport</span><span data-i18n="signalSmtp">Domain-based SMTP routing</span><span data-i18n="signalRecovery">Recovery documentation</span></div>
+        </div>
+        <div class="hero-stage" aria-label="Animated email exchange">
+          <div class="mail-stage">
+            <span class="mail-orbit"></span><span class="mail-orbit"></span><span class="mail-lane lane-one"></span><span class="mail-lane lane-two"></span><span class="mail-lane lane-three"></span>
+            <span class="mail-message"></span><span class="mail-message mail-message-two"></span><span class="mail-message mail-message-three"></span>
+            <span class="mail-chip mail-chip-in" data-i18n="chipInbound">Inbound SMTP</span><span class="mail-chip mail-chip-out" data-i18n="chipOutbound">Outbound relay</span><span class="mail-chip mail-chip-auth" data-i18n="chipAuth">SPF / DKIM / DMARC</span>
+            <div class="mail-core"><div class="mail-core-top"><span>mail-flow.status</span><span data-i18n="mailStatusValue">live routing</span></div><div class="mail-icon"><span class="mail-envelope"></span></div><div class="mail-slot"><strong data-i18n="mailIncomingLabel">Incoming messages</strong><span data-i18n="mailIncomingValue">External users -> secure entry -> mailbox services</span></div><div class="mail-slot"><strong data-i18n="mailOutgoingLabel">Outgoing policy</strong><span data-i18n="mailOutgoingValue">Sender domain -> direct or relayed SMTP path</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture" class="section">
+        <div class="section-heading"><p class="eyebrow" data-i18n="storyKicker">Project story</p><h2 data-i18n="storyTitle">One platform, many layers, clear boundaries.</h2><p data-i18n="storyLead">The project joined corporate website delivery and corporate email into a maintainable operational model. The important work was coordinating public DNS, TLS, proxies, tunnels, routing, mail authentication, backups, and recovery so each layer could be validated without exposing production secrets.</p></div>
+        <div class="story-grid"><article class="story-panel"><strong data-i18n="roleLabel">My role</strong><h3 data-i18n="roleTitle">End-to-end infrastructure ownership</h3><p data-i18n="roleBody">I designed and deployed the website presentation layer, administered the Linux hosting environment, configured web and mail services, integrated secure remote connectivity, implemented routing policies, validated DNS and TLS behavior, investigated incidents, and documented recovery procedures.</p></article><aside class="story-panel metric-list"><div class="metric"><strong data-i18n="metricTypeLabel">Type</strong><small>Sanitized production case study</small></div><div class="metric"><strong data-i18n="metricStackLabel">Stack</strong><small>Linux / HestiaCP / Nginx / Exim / Dovecot</small></div><div class="metric"><strong data-i18n="metricNetworkLabel">Network</strong><small>WireGuard / HAProxy / MikroTik / DNS</small></div><div class="metric"><strong data-i18n="metricBoundaryLabel">Boundary</strong><small>No production identifiers</small></div></aside></div>
+        <div class="architecture-stage" aria-label="Animated infrastructure flow"><div class="system-map"><span class="map-floor"></span><svg class="route-lines" viewBox="0 0 1000 780" aria-hidden="true"><path d="M180 95 C230 130 270 160 320 205"/><path d="M450 70 C410 116 366 160 320 205"/><path d="M320 205 C345 270 360 315 380 330"/><path d="M380 330 C430 390 485 420 520 440"/><path d="M520 440 C585 386 636 372 670 390"/><path d="M670 390 C705 450 735 488 760 515"/><path d="M760 515 C700 555 630 594 570 590"/><path d="M820 240 C780 282 725 335 670 390"/><path d="M570 590 C460 660 350 690 190 664"/><path d="M570 590 C550 682 530 710 510 718"/><path d="M570 590 C636 660 704 690 680 694"/><path d="M570 590 C694 640 802 650 850 640"/></svg><article class="node node-public" data-code="U"><strong>External users</strong><small>public access</small></article><article class="node node-dns" data-code="DNS"><strong>Public DNS</strong><small>MX / SPF / DKIM / DMARC</small></article><article class="node node-vps" data-code="VPS"><strong>External VPS</strong><small>controlled entry layer</small></article><article class="node node-haproxy" data-code="HA"><strong>HAProxy and SMTP relay</strong><small>selected services</small></article><article class="node node-tunnel" data-code="WG"><strong>Encrypted WireGuard tunnel</strong><small>cross-location transport</small></article><article class="node node-router" data-code="MT"><strong>MikroTik edge router</strong><small>firewall / NAT / policy routes</small></article><article class="node node-proxy" data-code="RP"><strong>Reverse proxy server</strong><small>controlled web path</small></article><article class="node node-server" data-code="LX"><strong>Linux web and mail server</strong><small>HestiaCP / Nginx / Exim / Dovecot</small></article><article class="node node-internal" data-code="LAN"><strong>Internal users</strong><small>routed internal access</small></article><span class="service service-web">Corporate website</span><span class="service service-smtp">Exim SMTP</span><span class="service service-imap">Dovecot IMAP</span><span class="service service-webmail">Roundcube webmail</span><span class="service service-backup">Backup and logs</span><span class="packet"></span><span class="packet packet-two"></span><span class="packet packet-three"></span></div><div class="stage-caption"><strong data-i18n="stageCaptionTitle">Mail and web traffic are animated as moving packets.</strong><small data-i18n="stageCaptionBody">The public repo keeps this diagram generalized: no production domains, routes, addresses, credentials, exact ports, logs, or provider details are published.</small></div></div>
+      </section>
+
+      <section class="section"><div class="section-heading"><p class="eyebrow" data-i18n="scopeKicker">Engineering scope</p><h2 data-i18n="scopeTitle">What was implemented</h2></div><div class="scope-grid"><article class="scope-card"><span>01</span><h3 data-i18n="scope1Title">Web and hosting platform</h3><p data-i18n="scope1Body">Corporate website delivery, Linux hosting, HestiaCP administration, Nginx, HTTPS behavior, service health, ownership, permissions, and deployment validation.</p></article><article class="scope-card"><span>02</span><h3 data-i18n="scope2Title">Mail platform</h3><p data-i18n="scope2Body">Exim SMTP transport, Dovecot mailbox access, Roundcube webmail, TLS-secured user paths, queue inspection, logs, certificate checks, and reachability validation.</p></article><article class="scope-card"><span>03</span><h3 data-i18n="scope3Title">Hybrid access paths</h3><p data-i18n="scope3Body">Internal users reached services through routed local policy, while external users entered through a VPS, HAProxy, WireGuard, MikroTik, and the controlled hosting network.</p></article><article class="scope-card"><span>04</span><h3 data-i18n="scope4Title">SMTP delivery policy</h3><p data-i18n="scope4Body">Sender-domain based Exim routing selected either direct delivery or secure external relay transport, keeping delivery behavior aligned with SPF, DKIM, DMARC, MX, PTR, and TLS.</p></article><article class="scope-card"><span>05</span><h3 data-i18n="scope5Title">Network controls</h3><p data-i18n="scope5Body">MikroTik firewall, NAT, policy routes, controlled public exposure, encrypted transport, route verification, HAProxy backend checks, and post-change network validation.</p></article><article class="scope-card"><span>06</span><h3 data-i18n="scope6Title">Operations and recovery</h3><p data-i18n="scope6Body">Backup planning, health checks, restore validation, log review, troubleshooting notes, and a documented recovery case for a hosting control panel dependency failure.</p></article></div></section>
+      <section class="section"><div class="section-heading"><p class="eyebrow" data-i18n="pathsKicker">Traffic paths</p><h2 data-i18n="pathsTitle">How requests move through the system</h2></div><div class="path-grid"><article class="flow-card"><span data-i18n="path1Label">Website flow</span><h3 data-i18n="path1Title">Public web delivery</h3><div class="flow-row" data-i18n="path1Flow">DNS -> entry/proxy -> Nginx -> website content</div><p data-i18n="path1Body">The website layer is delivered through controlled hosting and proxy behavior, with HTTPS, availability, filesystem changes, and service status validated after operational changes.</p></article><article class="flow-card"><span data-i18n="path2Label">External mail access</span><h3 data-i18n="path2Title">Public mail path through a protected edge</h3><div class="flow-row" data-i18n="path2Flow">External user -> VPS -> HAProxy -> WireGuard -> MikroTik -> mail services</div><p data-i18n="path2Body">The VPS is an entry layer, WireGuard carries selected traffic, and MikroTik policy controls what reaches the internal hosting environment.</p></article><article class="flow-card"><span data-i18n="path3Label">Internal access</span><h3 data-i18n="path3Title">Internal users use the local routed path</h3><div class="flow-row" data-i18n="path3Flow">Internal user -> MikroTik -> Exim / Dovecot / Roundcube / web</div><p data-i18n="path3Body">Internal access reduces dependence on the public entry layer while keeping access policy, service validation, and operational visibility centralized.</p></article><article class="flow-card"><span data-i18n="path4Label">Outbound SMTP</span><h3 data-i18n="path4Title">Domain policy chooses the route</h3><div class="flow-row" data-i18n="path4Flow">sender domain -> Exim policy -> direct or relayed transport</div><p data-i18n="path4Body">Each hosted sender domain can use the delivery route that matches its operational requirements instead of forcing one global outbound path for all mail.</p></article></div></section>
+      <section id="operations" class="section"><div class="section-heading"><p class="eyebrow" data-i18n="recoveryKicker">Validation and recovery</p><h2 data-i18n="recoveryTitle">Built for operation, not just installation.</h2></div><div class="recovery-layout"><article class="recovery-card"><span data-i18n="recovery1Label">Validation model</span><h3 data-i18n="recovery1Title">Changes were checked across the full chain</h3><p data-i18n="recovery1Body">Validation covered website availability, HTTP to HTTPS behavior, certificate validity, DNS records, SMTP and IMAP reachability, webmail availability, Exim queues, Dovecot health, WireGuard peer state, HAProxy backend reachability, MikroTik routing counters, and restore checks.</p></article><article class="recovery-card"><span data-i18n="recovery2Label">Incident recovery</span><h3 data-i18n="recovery2Title">A dependency failure was recovered without treating everything as one blob</h3><p data-i18n="recovery2Body">When hosting control panel login returned HTTP 500 after a filesystem-related change, recovery separated hosted website content from control-panel application files, restored or validated the dependency layer, checked service health, and documented preventive controls.</p></article></div></section>
+      <section class="section"><div class="section-heading"><p class="eyebrow" data-i18n="boundaryKicker">Security and privacy boundary</p><h2 data-i18n="boundaryTitle">The repository explains decisions, not secrets.</h2><p data-i18n="boundaryLead">The public portfolio is intentionally restrained. It demonstrates engineering judgment while excluding anything that could identify or reproduce the production environment.</p></div><div class="boundary-grid"><article class="boundary-card"><span>01</span><h3 data-i18n="boundary1Title">Published</h3><p data-i18n="boundary1Body">Responsibilities, architecture relationships, operational decisions, validation categories, recovery lessons, and generalized routing concepts.</p></article><article class="boundary-card"><span>02</span><h3 data-i18n="boundary2Title">Excluded</h3><p data-i18n="boundary2Body">Real company identity, domains, hostnames, addresses, credentials, private keys, exact ports, production configuration, logs, mailbox data, screenshots, backups, and provider details.</p></article><article class="boundary-card"><span>03</span><h3 data-i18n="boundary3Title">Checked before publishing</h3><p data-i18n="boundary3Body">The repository includes public-safety checks for prohibited names, domain patterns, public IP patterns, email addresses, private key material, token-like strings, backups, logs, archives, certificates, and locale drift.</p></article></div></section>
+      <section id="docs" class="section"><div class="section-heading"><p class="eyebrow" data-i18n="docsKicker">Repository documentation</p><h2 data-i18n="docsTitle">Read the case study by layer</h2></div><div class="docs-grid"><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/architecture.md"><span data-i18n="doc1Label">Architecture</span><small>docs/architecture.md</small></a><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/web-platform.md"><span data-i18n="doc2Label">Web platform</span><small>docs/web-platform.md</small></a><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/mail-platform.md"><span data-i18n="doc3Label">Mail platform</span><small>docs/mail-platform.md</small></a><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/mail-routing.md"><span data-i18n="doc4Label">Mail routing</span><small>docs/mail-routing.md</small></a><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/security.md"><span data-i18n="doc5Label">Security</span><small>docs/security.md</small></a><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/testing-strategy.md"><span data-i18n="doc6Label">Testing strategy</span><small>docs/testing-strategy.md</small></a><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure/blob/main/docs/incident-recovery.md"><span data-i18n="doc7Label">Incident recovery</span><small>docs/incident-recovery.md</small></a><a class="doc-link" href="https://github.com/miladateight/hybrid-web-mail-infrastructure"><span data-i18n="doc8Label">Source repository</span><small>GitHub</small></a></div></section>
+      <footer class="footer"><span data-i18n="footerLeft">Hybrid Web &amp; Mail Infrastructure by Milad Ateight</span><nav class="footer-projects" aria-label="Other AT8 projects"><a href="https://ateight.xyz/NetDoctor/" data-i18n="projNetDoctor">NetDoctor</a><a href="https://ateight.xyz/KeyFix/" data-i18n="projKeyFix">KeyFix</a><a href="https://ateight.xyz/instagram-youtube-soundcloud-downloader/" data-i18n="projDownloader">Telegram Downloader</a></nav><span data-i18n="footerRight">Project page: ateight.xyz/hybrid-web-mail-infrastructure</span></footer>
+    </main>
+    <script>
+      const copy =       {
+        "en": {
+          "dir": "ltr",
+          "title": "Hybrid Web & Mail Infrastructure | AT8",
+          "navHome": "Home",
+          "navAbout": "About Me",
+          "navProjects": "Projects",
+          "navContact": "Contact Me",
+          "heroKicker": "Sanitized production case study",
+          "heroTitle": "Hybrid Corporate Web and Mail Infrastructure",
+          "heroLead": "A real web and mail platform engineered as one coordinated system: Linux hosting, HestiaCP, Nginx, Exim, Dovecot, Roundcube, HAProxy, WireGuard, MikroTik routing, DNS authentication, backups, validation, and incident recovery.",
+          "actionGithub": "Open GitHub repository",
+          "actionArchitecture": "View architecture",
+          "actionHome": "AT8 home",
+          "signalHosting": "Web and mail hosting",
+          "signalEdge": "Encrypted edge transport",
+          "signalSmtp": "Domain-based SMTP routing",
+          "signalRecovery": "Recovery documentation",
+          "chipInbound": "Inbound SMTP",
+          "chipOutbound": "Outbound relay",
+          "chipAuth": "SPF / DKIM / DMARC",
+          "mailStatusValue": "live routing",
+          "mailIncomingLabel": "Incoming messages",
+          "mailIncomingValue": "External users -> secure entry -> mailbox services",
+          "mailOutgoingLabel": "Outgoing policy",
+          "mailOutgoingValue": "Sender domain -> direct or relayed SMTP path",
+          "storyKicker": "Project story",
+          "storyTitle": "One platform, many layers, clear boundaries.",
+          "storyLead": "The project joined corporate website delivery and corporate email into a maintainable operational model. The important work was coordinating public DNS, TLS, proxies, tunnels, routing, mail authentication, backups, and recovery so each layer could be validated without exposing production secrets.",
+          "roleLabel": "My role",
+          "roleTitle": "End-to-end infrastructure ownership",
+          "roleBody": "I designed and deployed the website presentation layer, administered the Linux hosting environment, configured web and mail services, integrated secure remote connectivity, implemented routing policies, validated DNS and TLS behavior, investigated incidents, and documented recovery procedures.",
+          "metricTypeLabel": "Type",
+          "metricStackLabel": "Stack",
+          "metricNetworkLabel": "Network",
+          "metricBoundaryLabel": "Boundary",
+          "stageCaptionTitle": "Mail and web traffic are animated as moving packets.",
+          "stageCaptionBody": "The public repo keeps this diagram generalized: no production domains, routes, addresses, credentials, exact ports, logs, or provider details are published.",
+          "scopeKicker": "Engineering scope",
+          "scopeTitle": "What was implemented",
+          "scope1Title": "Web and hosting platform",
+          "scope1Body": "Corporate website delivery, Linux hosting, HestiaCP administration, Nginx, HTTPS behavior, service health, ownership, permissions, and deployment validation.",
+          "scope2Title": "Mail platform",
+          "scope2Body": "Exim SMTP transport, Dovecot mailbox access, Roundcube webmail, TLS-secured user paths, queue inspection, logs, certificate checks, and reachability validation.",
+          "scope3Title": "Hybrid access paths",
+          "scope3Body": "Internal users reached services through routed local policy, while external users entered through a VPS, HAProxy, WireGuard, MikroTik, and the controlled hosting network.",
+          "scope4Title": "SMTP delivery policy",
+          "scope4Body": "Sender-domain based Exim routing selected either direct delivery or secure external relay transport, keeping delivery behavior aligned with SPF, DKIM, DMARC, MX, PTR, and TLS.",
+          "scope5Title": "Network controls",
+          "scope5Body": "MikroTik firewall, NAT, policy routes, controlled public exposure, encrypted transport, route verification, HAProxy backend checks, and post-change network validation.",
+          "scope6Title": "Operations and recovery",
+          "scope6Body": "Backup planning, health checks, restore validation, log review, troubleshooting notes, and a documented recovery case for a hosting control panel dependency failure.",
+          "pathsKicker": "Traffic paths",
+          "pathsTitle": "How requests move through the system",
+          "path1Label": "Website flow",
+          "path1Title": "Public web delivery",
+          "path1Flow": "DNS -> entry/proxy -> Nginx -> website content",
+          "path1Body": "The website layer is delivered through controlled hosting and proxy behavior, with HTTPS, availability, filesystem changes, and service status validated after operational changes.",
+          "path2Label": "External mail access",
+          "path2Title": "Public mail path through a protected edge",
+          "path2Flow": "External user -> VPS -> HAProxy -> WireGuard -> MikroTik -> mail services",
+          "path2Body": "The VPS is an entry layer, WireGuard carries selected traffic, and MikroTik policy controls what reaches the internal hosting environment.",
+          "path3Label": "Internal access",
+          "path3Title": "Internal users use the local routed path",
+          "path3Flow": "Internal user -> MikroTik -> Exim / Dovecot / Roundcube / web",
+          "path3Body": "Internal access reduces dependence on the public entry layer while keeping access policy, service validation, and operational visibility centralized.",
+          "path4Label": "Outbound SMTP",
+          "path4Title": "Domain policy chooses the route",
+          "path4Flow": "sender domain -> Exim policy -> direct or relayed transport",
+          "path4Body": "Each hosted sender domain can use the delivery route that matches its operational requirements instead of forcing one global outbound path for all mail.",
+          "recoveryKicker": "Validation and recovery",
+          "recoveryTitle": "Built for operation, not just installation.",
+          "recovery1Label": "Validation model",
+          "recovery1Title": "Changes were checked across the full chain",
+          "recovery1Body": "Validation covered website availability, HTTP to HTTPS behavior, certificate validity, DNS records, SMTP and IMAP reachability, webmail availability, Exim queues, Dovecot health, WireGuard peer state, HAProxy backend reachability, MikroTik routing counters, and restore checks.",
+          "recovery2Label": "Incident recovery",
+          "recovery2Title": "A dependency failure was recovered without treating everything as one blob",
+          "recovery2Body": "When hosting control panel login returned HTTP 500 after a filesystem-related change, recovery separated hosted website content from control-panel application files, restored or validated the dependency layer, checked service health, and documented preventive controls.",
+          "boundaryKicker": "Security and privacy boundary",
+          "boundaryTitle": "The repository explains decisions, not secrets.",
+          "boundaryLead": "The public portfolio is intentionally restrained. It demonstrates engineering judgment while excluding anything that could identify or reproduce the production environment.",
+          "boundary1Title": "Published",
+          "boundary1Body": "Responsibilities, architecture relationships, operational decisions, validation categories, recovery lessons, and generalized routing concepts.",
+          "boundary2Title": "Excluded",
+          "boundary2Body": "Real company identity, domains, hostnames, addresses, credentials, private keys, exact ports, production configuration, logs, mailbox data, screenshots, backups, and provider details.",
+          "boundary3Title": "Checked before publishing",
+          "boundary3Body": "The repository includes public-safety checks for prohibited names, domain patterns, public IP patterns, email addresses, private key material, token-like strings, backups, logs, archives, certificates, and locale drift.",
+          "docsKicker": "Repository documentation",
+          "docsTitle": "Read the case study by layer",
+          "doc1Label": "Architecture",
+          "doc2Label": "Web platform",
+          "doc3Label": "Mail platform",
+          "doc4Label": "Mail routing",
+          "doc5Label": "Security",
+          "doc6Label": "Testing strategy",
+          "doc7Label": "Incident recovery",
+          "doc8Label": "Source repository",
+          "footerLeft": "Hybrid Web & Mail Infrastructure by Milad Ateight",
+          "footerRight": "Project page: ateight.xyz/hybrid-web-mail-infrastructure",
+          "projNetDoctor": "NetDoctor",
+          "projKeyFix": "KeyFix",
+          "projDownloader": "Telegram Downloader"
+        },
+        "fa": {
+          "dir": "rtl",
+          "title": "زیرساخت ترکیبی وب و ایمیل | AT8",
+          "navHome": "خانه",
+          "navAbout": "درباره من",
+          "navProjects": "پروژه ها",
+          "navContact": "تماس با من",
+          "heroKicker": "مطالعه موردی واقعی و پاک سازی شده",
+          "heroTitle": "زیرساخت ترکیبی وب و ایمیل سازمانی",
+          "heroLead": "یک پلتفرم واقعی وب و ایمیل که مثل یک سیستم هماهنگ طراحی و عملیاتی شده است: Linux hosting، HestiaCP، Nginx، Exim، Dovecot، Roundcube، HAProxy، WireGuard، MikroTik routing، DNS authentication، backup، validation و incident recovery.",
+          "actionGithub": "باز کردن ریپازیتوری GitHub",
+          "actionArchitecture": "دیدن معماری",
+          "actionHome": "خانه AT8",
+          "signalHosting": "هاستینگ وب و ایمیل",
+          "signalEdge": "ارتباط رمزنگاری شده edge",
+          "signalSmtp": "SMTP routing بر اساس دامنه",
+          "signalRecovery": "مستندات بازیابی",
+          "chipInbound": "SMTP ورودی",
+          "chipOutbound": "relay خروجی",
+          "chipAuth": "SPF / DKIM / DMARC",
+          "mailStatusValue": "routing فعال",
+          "mailIncomingLabel": "پیام های ورودی",
+          "mailIncomingValue": "کاربران خارجی -> ورودی امن -> سرویس های mailbox",
+          "mailOutgoingLabel": "سیاست خروجی",
+          "mailOutgoingValue": "Sender domain -> مسیر SMTP مستقیم یا relay",
+          "storyKicker": "داستان پروژه",
+          "storyTitle": "یک پلتفرم، چند لایه، مرزبندی شفاف.",
+          "storyLead": "این پروژه تحویل وب سایت سازمانی و ایمیل سازمانی را به یک مدل عملیاتی قابل نگهداری تبدیل کرد. کار اصلی هماهنگ کردن DNS عمومی، TLS، proxy ها، tunnel ها، routing، mail authentication، backup و recovery بود تا هر لایه قابل اعتبارسنجی باشد بدون اینکه رازهای production منتشر شود.",
+          "roleLabel": "نقش من",
+          "roleTitle": "مالکیت end-to-end زیرساخت",
+          "roleBody": "لایه presentation وب سایت را طراحی و deploy کردم، محیط Linux hosting را مدیریت کردم، سرویس های وب و ایمیل را پیکربندی کردم، ارتباط امن راه دور را اضافه کردم، policy های routing را پیاده سازی کردم، رفتار DNS و TLS را اعتبارسنجی کردم، incident ها را بررسی کردم و مسیرهای recovery را مستند کردم.",
+          "metricTypeLabel": "نوع",
+          "metricStackLabel": "پشته فنی",
+          "metricNetworkLabel": "شبکه",
+          "metricBoundaryLabel": "مرز",
+          "stageCaptionTitle": "ترافیک ایمیل و وب به‌صورت پکت‌های متحرک نمایش داده می‌شود.",
+          "stageCaptionBody": "نسخه‌ی عمومی این ریپو این دیاگرام را کلی نگه می‌دارد: هیچ دامنه، مسیر، آدرس، اعتبارنامه، پورت دقیق، لاگ یا جزئیات provider واقعی منتشر نمی‌شود.",
+          "scopeKicker": "محدوده‌ی فنی",
+          "scopeTitle": "چه چیزی پیاده‌سازی شد",
+          "scope1Title": "پلتفرم وب و هاستینگ",
+          "scope1Body": "تحویل وب‌سایت سازمانی، Linux hosting، مدیریت HestiaCP، Nginx، رفتار HTTPS، سلامت سرویس، مالکیت، دسترسی‌ها و اعتبارسنجی deploy.",
+          "scope2Title": "پلتفرم ایمیل",
+          "scope2Body": "انتقال SMTP با Exim، دسترسی mailbox با Dovecot، webmail با Roundcube، مسیرهای کاربر امن با TLS، بررسی صف، لاگ‌ها، چک certificate و اعتبارسنجی دسترس‌پذیری.",
+          "scope3Title": "مسیرهای دسترسی ترکیبی",
+          "scope3Body": "کاربران داخلی از طریق policy مسیریابی محلی به سرویس‌ها می‌رسیدند، در حالی که کاربران خارجی از طریق یک VPS، HAProxy، WireGuard، MikroTik و شبکه‌ی هاستینگ کنترل‌شده وارد می‌شدند.",
+          "scope4Title": "سیاست تحویل SMTP",
+          "scope4Body": "مسیریابی Exim بر اساس sender domain، تحویل مستقیم یا relay امن خارجی را انتخاب می‌کرد و رفتار تحویل را با SPF، DKIM، DMARC، MX، PTR و TLS هم‌راستا نگه می‌داشت.",
+          "scope5Title": "کنترل‌های شبکه",
+          "scope5Body": "فایروال MikroTik، NAT، policy route ها، کنترل دسترسی عمومی، انتقال رمزنگاری‌شده، تأیید مسیر، چک backend های HAProxy و اعتبارسنجی شبکه بعد از هر تغییر.",
+          "scope6Title": "عملیات و بازیابی",
+          "scope6Body": "برنامه‌ریزی backup، چک سلامت، اعتبارسنجی restore، بازبینی لاگ، یادداشت‌های troubleshooting و یک مورد بازیابی مستندشده برای خرابی dependency در control panel هاستینگ.",
+          "pathsKicker": "مسیرهای ترافیک",
+          "pathsTitle": "درخواست‌ها چطور در سیستم حرکت می‌کنند",
+          "path1Label": "مسیر وب‌سایت",
+          "path1Title": "تحویل وب عمومی",
+          "path1Flow": "DNS -> ورودی/proxy -> Nginx -> محتوای وب‌سایت",
+          "path1Body": "لایه‌ی وب‌سایت از طریق رفتار کنترل‌شده‌ی هاستینگ و proxy تحویل می‌شود؛ بعد از هر تغییر عملیاتی، HTTPS، دسترس‌پذیری، تغییرات فایل‌سیستم و وضعیت سرویس اعتبارسنجی می‌شوند.",
+          "path2Label": "دسترسی ایمیل عمومی",
+          "path2Title": "مسیر ایمیل عمومی از پشت یک edge محافظت‌شده",
+          "path2Flow": "کاربر خارجی -> VPS -> HAProxy -> WireGuard -> MikroTik -> سرویس‌های ایمیل",
+          "path2Body": "VPS یک لایه‌ی ورودی است، WireGuard ترافیک منتخب را حمل می‌کند و policy MikroTik تعیین می‌کند چه چیزی به محیط هاستینگ داخلی می‌رسد.",
+          "path3Label": "دسترسی داخلی",
+          "path3Title": "کاربران داخلی از مسیر محلی مسیریابی‌شده استفاده می‌کنند",
+          "path3Flow": "کاربر داخلی -> MikroTik -> Exim / Dovecot / Roundcube / web",
+          "path3Body": "دسترسی داخلی وابستگی به لایه‌ی ورودی عمومی را کم می‌کند و در همان حال policy دسترسی، اعتبارسنجی سرویس و دیدپذیری عملیاتی را متمرکز نگه می‌دارد.",
+          "path4Label": "SMTP خروجی",
+          "path4Title": "سیاست دامنه مسیر را انتخاب می‌کند",
+          "path4Flow": "sender domain -> policy Exim -> انتقال مستقیم یا relay",
+          "path4Body": "هر sender domain میزبانی‌شده می‌تواند مسیر تحویلی را استفاده کند که با نیاز عملیاتی‌اش هم‌خوانی دارد، به‌جای تحمیل یک مسیر خروجی سراسری برای همه‌ی ایمیل‌ها.",
+          "recoveryKicker": "اعتبارسنجی و بازیابی",
+          "recoveryTitle": "برای عملیات ساخته شده، نه فقط نصب.",
+          "recovery1Label": "مدل اعتبارسنجی",
+          "recovery1Title": "تغییرات در سراسر زنجیره بررسی شدند",
+          "recovery1Body": "اعتبارسنجی شامل دسترس‌پذیری وب‌سایت، رفتار HTTP به HTTPS، اعتبار certificate، رکوردهای DNS، دسترس‌پذیری SMTP و IMAP، دسترس‌پذیری webmail، صف‌های Exim، سلامت Dovecot، وضعیت peer WireGuard، دسترس‌پذیری backend های HAProxy، شمارنده‌های routing MikroTik و چک‌های restore بود.",
+          "recovery2Label": "بازیابی Incident",
+          "recovery2Title": "یک خرابی dependency بازیابی شد بدون اینکه همه‌چیز یک بلوک واحد در نظر گرفته شود",
+          "recovery2Body": "وقتی login پنل کنترل هاستینگ بعد از یک تغییر مربوط به filesystem خطای HTTP 500 برگرداند، بازیابی محتوای وب‌سایت میزبانی‌شده را از فایل‌های اپلیکیشن control-panel جدا کرد، لایه‌ی dependency را restore یا اعتبارسنجی کرد، سلامت سرویس را چک کرد و کنترل‌های پیشگیرانه را مستند کرد.",
+          "boundaryKicker": "مرز امنیت و حریم خصوصی",
+          "boundaryTitle": "ریپو تصمیم‌ها را توضیح می‌دهد، نه رازها را.",
+          "boundaryLead": "این پورتفولیوی عمومی عمداً محدود نگه داشته شده. judgment فنی را نشان می‌دهد و در عین حال هرچیزی که بتواند محیط production را شناسایی یا بازسازی کند را حذف می‌کند.",
+          "boundary1Title": "منتشرشده",
+          "boundary1Body": "مسئولیت‌ها، روابط معماری، تصمیم‌های عملیاتی، دسته‌های اعتبارسنجی، درس‌های بازیابی و مفاهیم کلی‌شده‌ی مسیریابی.",
+          "boundary2Title": "حذف‌شده",
+          "boundary2Body": "هویت واقعی شرکت، دامنه‌ها، hostname ها، آدرس‌ها، اعتبارنامه‌ها، کلیدهای خصوصی، پورت‌های دقیق، تنظیمات production، لاگ‌ها، داده‌ی mailbox، اسکرین‌شات‌ها، backup ها و جزئیات provider.",
+          "boundary3Title": "چک‌شده قبل از انتشار",
+          "boundary3Body": "این ریپو شامل چک‌های ایمنی عمومی برای نام‌های ممنوع، الگوهای دامنه، الگوهای IP عمومی، آدرس‌های ایمیل، مواد کلید خصوصی، رشته‌های شبیه token، backup ها، لاگ‌ها، آرشیوها، certificate ها و انحراف locale است.",
+          "docsKicker": "مستندات ریپو",
+          "docsTitle": "مطالعه موردی را لایه‌به‌لایه بخوان",
+          "doc1Label": "معماری",
+          "doc2Label": "پلتفرم وب",
+          "doc3Label": "پلتفرم ایمیل",
+          "doc4Label": "مسیریابی ایمیل",
+          "doc5Label": "امنیت",
+          "doc6Label": "استراتژی تست",
+          "doc7Label": "بازیابی Incident",
+          "doc8Label": "ریپوی سورس",
+          "footerLeft": "زیرساخت ترکیبی وب و ایمیل ساخته‌ی میلاد Ateight",
+          "footerRight": "صفحه پروژه: ateight.xyz/hybrid-web-mail-infrastructure",
+          "projNetDoctor": "نت‌دکتر",
+          "projKeyFix": "کی‌فیکس",
+          "projDownloader": "دانلودر تلگرام"
+        },
+        "ar": {
+          "dir": "rtl",
+          "title": "بنية ويب وبريد هجينة | AT8",
+          "navHome": "الرئيسية",
+          "navAbout": "من أنا",
+          "navProjects": "المشاريع",
+          "navContact": "تواصل معي",
+          "heroKicker": "دراسة حالة تشغيلية منقّاة",
+          "heroTitle": "بنية ويب وبريد هجينة للشركات",
+          "heroLead": "منصة ويب وبريد حقيقية صُممت كنظام منسق واحد: Linux hosting، HestiaCP، Nginx، Exim، Dovecot، Roundcube، HAProxy، WireGuard، توجيه MikroTik، مصادقة DNS، النسخ الاحتياطي، التحقق، واستعادة الحوادث.",
+          "actionGithub": "فتح مستودع GitHub",
+          "actionArchitecture": "عرض المعمارية",
+          "actionHome": "صفحة AT8",
+          "signalHosting": "استضافة الويب والبريد",
+          "signalEdge": "نقل مشفر عند الحافة",
+          "signalSmtp": "توجيه SMTP حسب الدومين",
+          "signalRecovery": "وثائق الاستعادة",
+          "chipInbound": "SMTP الوارد",
+          "chipOutbound": "relay الصادر",
+          "chipAuth": "SPF / DKIM / DMARC",
+          "mailStatusValue": "توجيه نشط",
+          "mailIncomingLabel": "الرسائل الواردة",
+          "mailIncomingValue": "مستخدمون خارجيون -> مدخل آمن -> خدمات البريد",
+          "mailOutgoingLabel": "سياسة الصادر",
+          "mailOutgoingValue": "دومين المرسل -> مسار SMTP مباشر أو relay",
+          "storyKicker": "قصة المشروع",
+          "storyTitle": "منصة واحدة، طبقات متعددة، حدود واضحة.",
+          "storyLead": "جمع المشروع بين تسليم الموقع المؤسسي والبريد المؤسسي في نموذج تشغيلي قابل للصيانة. كان العمل الأساسي تنسيق DNS العام وTLS والوكلاء والأنفاق والتوجيه ومصادقة البريد والنسخ الاحتياطي والاستعادة حتى يمكن التحقق من كل طبقة دون كشف أسرار production.",
+          "roleLabel": "دوري",
+          "roleTitle": "ملكية كاملة للبنية التحتية من البداية للنهاية",
+          "roleBody": "صممت ونشرت طبقة عرض الموقع، وأدرت بيئة استضافة Linux، وضبطت خدمات الويب والبريد، وأضفت اتصالا آمنا عن بعد، وطبقت سياسات التوجيه، وتحققت من سلوك DNS وTLS، وحققت في الحوادث، ووثقت إجراءات الاستعادة.",
+          "metricTypeLabel": "النوع",
+          "metricStackLabel": "الحزمة التقنية",
+          "metricNetworkLabel": "الشبكة",
+          "metricBoundaryLabel": "الحدود",
+          "stageCaptionTitle": "تُعرض حركة البريد والويب كحزم متحركة.",
+          "stageCaptionBody": "يحافظ المستودع العام على تعميم هذا المخطط: لا يُنشر أي دومين أو مسار أو عنوان أو بيانات اعتماد أو منفذ دقيق أو سجل أو تفاصيل مزود حقيقية.",
+          "scopeKicker": "نطاق العمل التقني",
+          "scopeTitle": "ما الذي تم تنفيذه",
+          "scope1Title": "منصة الويب والاستضافة",
+          "scope1Body": "تسليم الموقع المؤسسي، استضافة Linux، إدارة HestiaCP، Nginx، سلوك HTTPS، صحة الخدمة، الملكية، الصلاحيات، والتحقق من النشر.",
+          "scope2Title": "منصة البريد",
+          "scope2Body": "نقل SMTP عبر Exim، الوصول لصناديق البريد عبر Dovecot، webmail عبر Roundcube، مسارات مستخدم مؤمنة بـ TLS، فحص الطابور، السجلات، فحوصات الشهادات، والتحقق من الوصول.",
+          "scope3Title": "مسارات الوصول الهجينة",
+          "scope3Body": "وصل المستخدمون الداخليون إلى الخدمات عبر سياسة توجيه محلية، بينما دخل المستخدمون الخارجيون عبر VPS وHAProxy وWireGuard وMikroTik وشبكة الاستضافة المتحكم بها.",
+          "scope4Title": "سياسة تسليم SMTP",
+          "scope4Body": "اختار توجيه Exim المعتمد على دومين المرسل بين التسليم المباشر أو نقل relay خارجي آمن، مع إبقاء سلوك التسليم متوافقا مع SPF وDKIM وDMARC وMX وPTR وTLS.",
+          "scope5Title": "ضوابط الشبكة",
+          "scope5Body": "جدار حماية MikroTik، NAT، مسارات السياسة، التحكم بالتعرض العام، النقل المشفر، التحقق من المسار، فحوصات backend في HAProxy، والتحقق من الشبكة بعد كل تغيير.",
+          "scope6Title": "العمليات والاستعادة",
+          "scope6Body": "تخطيط النسخ الاحتياطي، فحوصات الصحة، التحقق من الاستعادة، مراجعة السجلات، ملاحظات استكشاف الأخطاء، وحالة استعادة موثقة لفشل تبعية في لوحة تحكم الاستضافة.",
+          "pathsKicker": "مسارات حركة البيانات",
+          "pathsTitle": "كيف تتحرك الطلبات داخل النظام",
+          "path1Label": "مسار الموقع",
+          "path1Title": "تسليم ويب عام",
+          "path1Flow": "DNS -> مدخل/وكيل -> Nginx -> محتوى الموقع",
+          "path1Body": "تُسلَّم طبقة الموقع عبر سلوك استضافة ووكيل متحكم به، مع التحقق من HTTPS والتوفر وتغييرات نظام الملفات وحالة الخدمة بعد كل تغيير تشغيلي.",
+          "path2Label": "وصول بريد عام",
+          "path2Title": "مسار بريد عام عبر حافة محمية",
+          "path2Flow": "مستخدم خارجي -> VPS -> HAProxy -> WireGuard -> MikroTik -> خدمات البريد",
+          "path2Body": "يعمل VPS كطبقة مدخل، ويحمل WireGuard الترافيك المختار، وتتحكم سياسة MikroTik فيما يصل إلى بيئة الاستضافة الداخلية.",
+          "path3Label": "وصول داخلي",
+          "path3Title": "يستخدم المستخدمون الداخليون المسار المحلي الموجَّه",
+          "path3Flow": "مستخدم داخلي -> MikroTik -> Exim / Dovecot / Roundcube / web",
+          "path3Body": "يقلل الوصول الداخلي الاعتماد على طبقة المدخل العامة بينما يحافظ على مركزية سياسة الوصول والتحقق من الخدمة والرؤية التشغيلية.",
+          "path4Label": "SMTP صادر",
+          "path4Title": "سياسة الدومين تختار المسار",
+          "path4Flow": "دومين المرسل -> سياسة Exim -> نقل مباشر أو relay",
+          "path4Body": "يمكن لكل دومين مرسل مستضاف استخدام مسار التسليم الذي يناسب احتياجاته التشغيلية بدلا من فرض مسار صادر عام واحد لكل البريد.",
+          "recoveryKicker": "التحقق والاستعادة",
+          "recoveryTitle": "مبني للتشغيل، لا للتركيب فقط.",
+          "recovery1Label": "نموذج التحقق",
+          "recovery1Title": "تم فحص التغييرات عبر السلسلة الكاملة",
+          "recovery1Body": "شمل التحقق توفر الموقع، سلوك HTTP إلى HTTPS، صلاحية الشهادة، سجلات DNS، الوصول إلى SMTP وIMAP، توفر webmail، طوابير Exim، صحة Dovecot، حالة peer في WireGuard، الوصول إلى backend في HAProxy، عدادات توجيه MikroTik، وفحوصات الاستعادة.",
+          "recovery2Label": "استعادة من حادثة",
+          "recovery2Title": "تمت استعادة فشل تبعية دون التعامل مع كل شيء كوحدة واحدة",
+          "recovery2Body": "عندما أعاد تسجيل دخول لوحة تحكم الاستضافة خطأ HTTP 500 بعد تغيير متعلق بنظام الملفات، فصلت الاستعادة محتوى الموقع المستضاف عن ملفات تطبيق لوحة التحكم، واستعادت أو تحققت من طبقة التبعية، وفحصت صحة الخدمة، ووثقت ضوابط وقائية.",
+          "boundaryKicker": "حدود الأمان والخصوصية",
+          "boundaryTitle": "المستودع يشرح القرارات، لا الأسرار.",
+          "boundaryLead": "هذا البورتفوليو العام مقيد عمدا. يوضح الحكم التقني بينما يستثني أي شيء قد يحدد أو يعيد إنتاج بيئة production.",
+          "boundary1Title": "المنشور",
+          "boundary1Body": "المسؤوليات، علاقات المعمارية، القرارات التشغيلية، فئات التحقق، دروس الاستعادة، ومفاهيم التوجيه المعممة.",
+          "boundary2Title": "المستثنى",
+          "boundary2Body": "هوية الشركة الحقيقية، الدومينات، أسماء المضيفين، العناوين، بيانات الاعتماد، المفاتيح الخاصة، المنافذ الدقيقة، تكوين production، السجلات، بيانات صناديق البريد، لقطات الشاشة، النسخ الاحتياطية، وتفاصيل المزود.",
+          "boundary3Title": "مفحوص قبل النشر",
+          "boundary3Body": "يتضمن المستودع فحوصات أمان عامة للأسماء المحظورة، أنماط الدومين، أنماط IP العامة، عناوين البريد الإلكتروني، مواد المفاتيح الخاصة، السلاسل الشبيهة بالـ token، النسخ الاحتياطية، السجلات، الأرشيفات، الشهادات، وانحراف locale.",
+          "docsKicker": "وثائق المستودع",
+          "docsTitle": "اقرأ دراسة الحالة طبقة بطبقة",
+          "doc1Label": "المعمارية",
+          "doc2Label": "منصة الويب",
+          "doc3Label": "منصة البريد",
+          "doc4Label": "توجيه البريد",
+          "doc5Label": "الأمان",
+          "doc6Label": "استراتيجية الاختبار",
+          "doc7Label": "استعادة الحوادث",
+          "doc8Label": "مستودع المصدر",
+          "footerLeft": "البنية الهجينة للويب والبريد بواسطة Milad Ateight",
+          "footerRight": "صفحة المشروع: ateight.xyz/hybrid-web-mail-infrastructure",
+          "projNetDoctor": "نت دكتور",
+          "projKeyFix": "كي فيكس",
+          "projDownloader": "بوت تيليجرام للتحميل"
+        },
+        "de": {
+          "dir": "ltr",
+          "title": "Hybride Web- und Mail-Infrastruktur | AT8",
+          "navHome": "Home",
+          "navAbout": "About Me",
+          "navProjects": "Projects",
+          "navContact": "Contact Me",
+          "heroKicker": "Bereinigte Produktions-Fallstudie",
+          "heroTitle": "Hybride Web- und Mail-Infrastruktur für Unternehmen",
+          "heroLead": "Eine echte Web- und Mail-Plattform, aufgebaut als ein koordiniertes System: Linux-Hosting, HestiaCP, Nginx, Exim, Dovecot, Roundcube, HAProxy, WireGuard, MikroTik-Routing, DNS-Authentifizierung, Backups, Validierung und Incident-Recovery.",
+          "actionGithub": "GitHub-Repository öffnen",
+          "actionArchitecture": "Architektur ansehen",
+          "actionHome": "AT8 Home",
+          "signalHosting": "Web- und Mail-Hosting",
+          "signalEdge": "Verschlüsselter Edge-Transport",
+          "signalSmtp": "Domain-basiertes SMTP-Routing",
+          "signalRecovery": "Recovery-Dokumentation",
+          "chipInbound": "Eingehendes SMTP",
+          "chipOutbound": "Ausgehendes Relay",
+          "chipAuth": "SPF / DKIM / DMARC",
+          "mailStatusValue": "aktives Routing",
+          "mailIncomingLabel": "Eingehende Nachrichten",
+          "mailIncomingValue": "Externe Nutzer -> sicherer Eingang -> Mailbox-Dienste",
+          "mailOutgoingLabel": "Ausgangsrichtlinie",
+          "mailOutgoingValue": "Absenderdomain -> direkter oder weitergeleiteter SMTP-Pfad",
+          "storyKicker": "Projektgeschichte",
+          "storyTitle": "Eine Plattform, viele Schichten, klare Grenzen.",
+          "storyLead": "Das Projekt vereinte die Auslieferung der Unternehmenswebsite und die Unternehmens-E-Mail in einem wartbaren Betriebsmodell. Die wichtigste Arbeit war die Koordination von öffentlichem DNS, TLS, Proxys, Tunneln, Routing, Mail-Authentifizierung, Backups und Recovery, damit jede Schicht validiert werden konnte, ohne Produktionsgeheimnisse offenzulegen.",
+          "roleLabel": "Meine Rolle",
+          "roleTitle": "End-to-End-Verantwortung für die Infrastruktur",
+          "roleBody": "Ich entwarf und veröffentlichte die Präsentationsschicht der Website, verwaltete die Linux-Hosting-Umgebung, konfigurierte Web- und Mail-Dienste, integrierte eine sichere Remote-Verbindung, implementierte Routing-Richtlinien, validierte DNS- und TLS-Verhalten, untersuchte Incidents und dokumentierte Recovery-Verfahren.",
+          "metricTypeLabel": "Typ",
+          "metricStackLabel": "Stack",
+          "metricNetworkLabel": "Netzwerk",
+          "metricBoundaryLabel": "Grenze",
+          "stageCaptionTitle": "Mail- und Web-Traffic werden als bewegte Pakete animiert.",
+          "stageCaptionBody": "Das öffentliche Repository hält dieses Diagramm bewusst allgemein: Es werden keine echten Produktionsdomains, Routen, Adressen, Zugangsdaten, genauen Ports, Logs oder Provider-Details veröffentlicht.",
+          "scopeKicker": "Technischer Umfang",
+          "scopeTitle": "Was umgesetzt wurde",
+          "scope1Title": "Web- und Hosting-Plattform",
+          "scope1Body": "Auslieferung der Unternehmenswebsite, Linux-Hosting, HestiaCP-Administration, Nginx, HTTPS-Verhalten, Dienststatus, Eigentümerschaft, Berechtigungen und Deployment-Validierung.",
+          "scope2Title": "Mail-Plattform",
+          "scope2Body": "SMTP-Transport über Exim, Mailbox-Zugriff über Dovecot, Webmail über Roundcube, TLS-gesicherte Nutzerpfade, Warteschlangenprüfung, Logs, Zertifikatsprüfungen und Erreichbarkeitsvalidierung.",
+          "scope3Title": "Hybride Zugriffswege",
+          "scope3Body": "Interne Nutzer erreichten Dienste über eine lokal geroutete Richtlinie, während externe Nutzer über einen VPS, HAProxy, WireGuard, MikroTik und das kontrollierte Hosting-Netzwerk eintraten.",
+          "scope4Title": "SMTP-Zustellrichtlinie",
+          "scope4Body": "Auf der Absenderdomain basierendes Exim-Routing wählte direkte Zustellung oder sicheren externen Relay-Transport und hielt das Zustellverhalten mit SPF, DKIM, DMARC, MX, PTR und TLS im Einklang.",
+          "scope5Title": "Netzwerkkontrollen",
+          "scope5Body": "MikroTik-Firewall, NAT, Policy-Routen, kontrollierte öffentliche Exposition, verschlüsselter Transport, Routenprüfung, HAProxy-Backend-Checks und Netzwerkvalidierung nach jeder Änderung.",
+          "scope6Title": "Betrieb und Recovery",
+          "scope6Body": "Backup-Planung, Health-Checks, Restore-Validierung, Log-Review, Troubleshooting-Notizen und ein dokumentierter Recovery-Fall für einen Abhängigkeitsfehler im Hosting-Kontrollpanel.",
+          "pathsKicker": "Traffic-Pfade",
+          "pathsTitle": "Wie Anfragen durch das System laufen",
+          "path1Label": "Website-Fluss",
+          "path1Title": "Öffentliche Web-Auslieferung",
+          "path1Flow": "DNS -> Eingang/Proxy -> Nginx -> Website-Inhalt",
+          "path1Body": "Die Website-Schicht wird über kontrolliertes Hosting- und Proxy-Verhalten ausgeliefert; nach jeder Betriebsänderung werden HTTPS, Verfügbarkeit, Dateisystemänderungen und Dienststatus validiert.",
+          "path2Label": "Externer Mail-Zugriff",
+          "path2Title": "Öffentlicher Mail-Pfad über eine geschützte Edge",
+          "path2Flow": "Externer Nutzer -> VPS -> HAProxy -> WireGuard -> MikroTik -> Mail-Dienste",
+          "path2Body": "Der VPS ist eine Eingangsschicht, WireGuard transportiert ausgewählten Traffic, und die MikroTik-Richtlinie steuert, was die interne Hosting-Umgebung erreicht.",
+          "path3Label": "Interner Zugriff",
+          "path3Title": "Interne Nutzer verwenden den lokal gerouteten Pfad",
+          "path3Flow": "Interner Nutzer -> MikroTik -> Exim / Dovecot / Roundcube / web",
+          "path3Body": "Interner Zugriff verringert die Abhängigkeit von der öffentlichen Eingangsschicht und hält Zugriffsrichtlinie, Diensteprüfung und operative Sichtbarkeit zentralisiert.",
+          "path4Label": "Ausgehendes SMTP",
+          "path4Title": "Domain-Richtlinie wählt die Route",
+          "path4Flow": "Absenderdomain -> Exim-Richtlinie -> direkter oder weitergeleiteter Transport",
+          "path4Body": "Jede gehostete Absenderdomain kann den Zustellweg nutzen, der ihren betrieblichen Anforderungen entspricht, statt einen einzigen globalen Ausgangspfad für alle Mails zu erzwingen.",
+          "recoveryKicker": "Validierung und Recovery",
+          "recoveryTitle": "Für den Betrieb gebaut, nicht nur für die Installation.",
+          "recovery1Label": "Validierungsmodell",
+          "recovery1Title": "Änderungen wurden über die gesamte Kette geprüft",
+          "recovery1Body": "Die Validierung umfasste Website-Verfügbarkeit, HTTP-zu-HTTPS-Verhalten, Zertifikatsgültigkeit, DNS-Einträge, SMTP- und IMAP-Erreichbarkeit, Webmail-Verfügbarkeit, Exim-Warteschlangen, Dovecot-Status, WireGuard-Peer-Status, HAProxy-Backend-Erreichbarkeit, MikroTik-Routing-Zähler und Restore-Checks.",
+          "recovery2Label": "Incident-Recovery",
+          "recovery2Title": "Ein Abhängigkeitsfehler wurde behoben, ohne alles als einen Block zu behandeln",
+          "recovery2Body": "Als der Login des Hosting-Kontrollpanels nach einer dateisystembezogenen Änderung HTTP 500 zurückgab, trennte die Recovery den gehosteten Website-Inhalt von den Anwendungsdateien des Kontrollpanels, stellte die Abhängigkeitsschicht wieder her oder validierte sie, prüfte den Dienststatus und dokumentierte vorbeugende Maßnahmen.",
+          "boundaryKicker": "Sicherheits- und Datenschutzgrenze",
+          "boundaryTitle": "Das Repository erklärt Entscheidungen, keine Geheimnisse.",
+          "boundaryLead": "Das öffentliche Portfolio ist bewusst zurückhaltend. Es zeigt technisches Urteilsvermögen und schließt dabei alles aus, was die Produktionsumgebung identifizieren oder reproduzieren könnte.",
+          "boundary1Title": "Veröffentlicht",
+          "boundary1Body": "Verantwortlichkeiten, Architekturbeziehungen, Betriebsentscheidungen, Validierungskategorien, Recovery-Lektionen und verallgemeinerte Routing-Konzepte.",
+          "boundary2Title": "Ausgeschlossen",
+          "boundary2Body": "Echte Firmenidentität, Domains, Hostnamen, Adressen, Zugangsdaten, private Schlüssel, genaue Ports, Produktionskonfiguration, Logs, Mailbox-Daten, Screenshots, Backups und Provider-Details.",
+          "boundary3Title": "Vor Veröffentlichung geprüft",
+          "boundary3Body": "Das Repository enthält öffentliche Sicherheitsprüfungen für verbotene Namen, Domain-Muster, öffentliche IP-Muster, E-Mail-Adressen, privates Schlüsselmaterial, token-ähnliche Zeichenketten, Backups, Logs, Archive, Zertifikate und Locale-Abweichungen.",
+          "docsKicker": "Repository-Dokumentation",
+          "docsTitle": "Die Fallstudie schichtweise lesen",
+          "doc1Label": "Architektur",
+          "doc2Label": "Web-Plattform",
+          "doc3Label": "Mail-Plattform",
+          "doc4Label": "Mail-Routing",
+          "doc5Label": "Sicherheit",
+          "doc6Label": "Teststrategie",
+          "doc7Label": "Incident-Recovery",
+          "doc8Label": "Quell-Repository",
+          "footerLeft": "Hybrid Web & Mail Infrastructure von Milad Ateight",
+          "footerRight": "Projektseite: ateight.xyz/hybrid-web-mail-infrastructure",
+          "projNetDoctor": "NetDoctor",
+          "projKeyFix": "KeyFix",
+          "projDownloader": "Telegram-Downloader"
+        }
+      };
+
+      const languageButtons = document.querySelectorAll("[data-lang]");
+      const translatedNodes = document.querySelectorAll("[data-i18n]");
+
+      function setLanguage(language) {
+        const dictionary = copy[language] || copy.en;
+        document.documentElement.lang = language;
+        document.documentElement.dir = dictionary.dir;
+        document.body.classList.toggle("rtl", dictionary.dir === "rtl");
+        document.title = dictionary.title;
+        translatedNodes.forEach((node) => {
+          const key = node.dataset.i18n;
+          if (dictionary[key]) node.textContent = dictionary[key];
+        });
+        languageButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === language);
+        });
+      }
+
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => setLanguage(button.dataset.lang));
+      });
+
+      function syncLanguageButtonLabels() {
+        const short = window.matchMedia("(max-width: 680px)").matches;
+        languageButtons.forEach((button) => {
+          button.textContent = short ? button.dataset.short : button.dataset.full;
+        });
+      }
+
+      const initialLanguage = new URLSearchParams(window.location.search).get("lang") || "en";
+      syncLanguageButtonLabels();
+      setLanguage(initialLanguage);
+      window.addEventListener("resize", syncLanguageButtonLabels);
+    </script>
+  </body>
+</html>
