@@ -33,6 +33,10 @@ node_modules/
 dist/
 build/
 coverage/
+graphify-out/
+.graphify-cache/
+*.graphify.tmp
+*.graphify.log
 .DS_Store
 Thumbs.db
 .vscode/settings.json
