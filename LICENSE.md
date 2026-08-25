@@ -2,9 +2,9 @@
 
 This repository is provided for portfolio evaluation and review.
 
-## Presentation Site Code
+## Written Material and Diagrams
 
-The HTML, CSS, JavaScript and original abstract SVG assets created for this public case study may be viewed, studied and referenced for evaluation of Milad's portfolio work.
+The documentation, diagrams and original abstract illustrations created for this public case study may be viewed, studied and referenced for evaluation of Milad's portfolio work.
 
 ## Exclusions
 
